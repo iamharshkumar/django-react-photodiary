@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Container, Image} from "semantic-ui-react";
 import {postDetailURL, postListURL} from "../store/constants";
 import axios from 'axios';
+import {authAxios} from "../utils";
 
 class PostDetail extends Component {
     state = {
@@ -10,7 +11,7 @@ class PostDetail extends Component {
 
     componentDidMount() {
         const {id} = this.props.match.params;
-        axios.get(postDetailURL(id))
+        authAxios.get(postDetailURL(id))
             .then(res => {
                 console.log(res.data)
                 this.setState({post: res.data})

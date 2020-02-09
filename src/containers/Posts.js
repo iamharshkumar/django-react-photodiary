@@ -3,6 +3,7 @@ import {Container, Grid, Image} from 'semantic-ui-react';
 import axios from 'axios';
 import {postListURL} from "../store/constants";
 import {Link} from 'react-router-dom';
+import {authAxios} from "../utils";
 
 class Posts extends Component {
     state = {
@@ -14,7 +15,7 @@ class Posts extends Component {
     }
 
     postList() {
-        axios.get(postListURL)
+        authAxios.get(postListURL)
             .then(res => {
                 console.log(res.data);
                 this.setState({posts: res.data});

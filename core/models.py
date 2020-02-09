@@ -20,3 +20,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment
+
+    def natural_key(self):
+        return self.author.natural_key()

@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d2123e65-3081-4ea8-8373-1b718961430d" name="Default Changelist" comment="" />
+    <list default="true" id="d2123e65-3081-4ea8-8373-1b718961430d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/media/PostPic/58422.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/containers/PostDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Posts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Posts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/constants.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,13 +19,20 @@
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1XOCufGmGTO2QUJHaa5yHci5YsG" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -53,12 +69,17 @@
       <workItem from="1580909567465" duration="251000" />
       <workItem from="1580909836279" duration="2061000" />
       <workItem from="1581068753752" duration="164000" />
-      <workItem from="1581169256703" duration="20114000" />
+      <workItem from="1581169256703" duration="20377000" />
+      <workItem from="1581259662318" duration="1355000" />
+      <workItem from="1581261718427" duration="2210000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state width="1323" height="162" key="GridCell.Tab.0.bottom" timestamp="1580908817872">

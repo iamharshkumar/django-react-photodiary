@@ -24,7 +24,7 @@ class CustomLayout extends React.Component {
                         <Link to="/">
                             <Menu.Item header>Home</Menu.Item>
                         </Link>
-                        <Link to="/post/create">
+                        <Link to="/create">
                             <Menu.Item header>Post</Menu.Item>
                         </Link>
                         {authenticated ? (

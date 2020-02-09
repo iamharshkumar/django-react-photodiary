@@ -5,3 +5,4 @@ const apiURL ='/api';
 export const endpoint =`${localhost}${apiURL}`;
 
 export const postListURL =`${endpoint}/posts/`;
+export const postDetailURL = (id) => `${endpoint}/posts/${id}`;

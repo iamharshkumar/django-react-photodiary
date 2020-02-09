@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Container, Grid, Image} from 'semantic-ui-react';
 import axios from 'axios';
 import {postListURL} from "../store/constants";
+import {Link} from 'react-router-dom';
 
 class Posts extends Component {
     state = {
@@ -33,7 +34,10 @@ class Posts extends Component {
                             return (
 
                                 <Grid.Column key={post.id}>
-                                    <Image src={post.image} size="medium" rounded/>
+                                    <Link to={`/post/${post.id}`} >
+                                        <Image src={post.image} size="medium" rounded/>
+
+                                    </Link>
                                 </Grid.Column>
 
                             )

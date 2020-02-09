@@ -1,20 +1,28 @@
 import React, {Component} from 'react';
 import {Container, Form, Checkbox, Button} from "semantic-ui-react";
 import axios from "axios";
-import {postListURL} from "../store/constants";
+import {postListURL, UserIdURL} from "../store/constants";
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {authAxios} from "../utils";
 
 class PostCreate extends Component {
     state = {
-        "user": 1,
+        "user": null,
         "post_name": "",
         "image": null,
         "description": ""
     };
 
     componentDidMount() {
+        authAxios.get(UserIdURL)
+            .then(res => {
+                console.log(res.data)
+                this.setState({user: res.data.userID})
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     postSubmit = () => {

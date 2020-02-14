@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from django.conf.urls.static import static
-from core.views import UserIDView
+from core.views import UserIDView, CommentView
 
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
@@ -12,6 +12,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include("core.urls")),
     path('api/user-id/', UserIDView.as_view(), name='user-id'),
+    path('api/comment/', CommentView.as_view(), name='comment')
 
     # re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
 ]

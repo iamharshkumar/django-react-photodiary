@@ -3,14 +3,14 @@ from .models import Post, Comment
 
 
 class CommentSerializers(serializers.ModelSerializer):
-    author = serializers.SerializerMethodField()
+    user = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
-        fields = ('author', 'comment')
+        fields = ('author', 'user', 'comment', 'post')
 
-    def get_author(self, obj):
-        return obj.author.username
+    def get_user(self, obj):
+        return str(obj.author.username)
 
 
 class PostSerializers(serializers.ModelSerializer):

@@ -1,25 +1,64 @@
 import React, {Component} from 'react';
 import {Container, Image, Comment, Header, Form, Button} from "semantic-ui-react";
-import {postDetailURL, postListURL} from "../store/constants";
-import axios from 'axios';
+import {createComment, postDetailURL, postListURL, UserIdURL} from "../store/constants";
 import {authAxios} from "../utils";
 
 class PostDetail extends Component {
     state = {
-        post: {}
+        post: {},
+        comments: null,
+        user: null,
+        comment: ''
     };
 
     componentDidMount() {
-        const {id} = this.props.match.params;
-        authAxios.get(postDetailURL(id))
+        this.postsRender();
+
+        authAxios.get(UserIdURL)
             .then(res => {
-                console.log(res.data)
-                this.setState({post: res.data})
+                console.log(res.data);
+                this.setState({user: res.data.userID})
             })
             .catch(err => {
                 console.log(err)
             })
     }
+
+    postsRender = () => {
+        const {id} = this.props.match.params;
+        console.log(id)
+        authAxios.get(postDetailURL(id))
+            .then(res => {
+                console.log(res.data);
+                this.setState({post: res.data})
+            })
+            .catch(err => {
+                console.log(err)
+            });
+    };
+
+    commentSubmit = () => {
+        const {id} = this.props.match.params;
+        authAxios.post(createComment, {
+            'author': this.state.user,
+            'comment': this.state.comment,
+            'post': id
+        })
+            .then(res => {
+                console.log(res.data);
+                this.setState({comments: res.data})
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+        this.postsRender();
+        this.setState({comment: ""})
+    };
+
+    commentChange = (e) => {
+        this.setState({comment: e.target.value})
+    };
 
     render() {
         const {post} = this.state;
@@ -40,7 +79,7 @@ class PostDetail extends Component {
                             <Comment>
                                 <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg'/>
                                 <Comment.Content>
-                                    <Comment.Author as='a'>{comment.author}</Comment.Author>
+                                    <Comment.Author as='a'>{comment.user}</Comment.Author>
                                     <Comment.Metadata>
                                         <div>Today at 5:42PM</div>
                                     </Comment.Metadata>
@@ -51,8 +90,8 @@ class PostDetail extends Component {
                     })}
 
 
-                    <Form reply>
-                        <Form.TextArea/>
+                    <Form onSubmit={this.commentSubmit}>
+                        <Form.TextArea onChange={this.commentChange} value={this.state.comment}/>
                         <Button content='Add Comment' labelPosition='left' icon='edit' primary/>
                     </Form>
                 </Comment.Group>

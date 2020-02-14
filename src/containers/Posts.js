@@ -35,7 +35,7 @@ class Posts extends Component {
                             return (
 
                                 <Grid.Column key={post.id}>
-                                    <Link to={`/post/${post.id}`} >
+                                    <Link to={`/post/${post.id}`}>
                                         <Image src={post.image} size="medium" rounded/>
 
                                     </Link>

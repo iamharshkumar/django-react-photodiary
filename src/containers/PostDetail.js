@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Image} from "semantic-ui-react";
+import {Container, Image, Comment, Header, Form, Button} from "semantic-ui-react";
 import {postDetailURL, postListURL} from "../store/constants";
 import axios from 'axios';
 import {authAxios} from "../utils";
@@ -30,21 +30,32 @@ class PostDetail extends Component {
                 <h3>{post.post_name}</h3>
                 <p>{post.description}</p>
 
-                <b>Comments</b>
-                <br/>
-                <hr/>
-                <div>
+                <Comment.Group>
+                    <Header as='h3' dividing>
+                        Comments
+                    </Header>
+
                     {post.comments && post.comments.map(comment => {
                         return (
-                            <div key={comment.id}>
-                                <b>{comment.author}</b>
-
-                                <p>{comment.comment}</p>
-                                <hr/>
-                            </div>
+                            <Comment>
+                                <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg'/>
+                                <Comment.Content>
+                                    <Comment.Author as='a'>{comment.author}</Comment.Author>
+                                    <Comment.Metadata>
+                                        <div>Today at 5:42PM</div>
+                                    </Comment.Metadata>
+                                    <Comment.Text>{comment.comment}</Comment.Text>
+                                </Comment.Content>
+                            </Comment>
                         )
                     })}
-                </div>
+
+
+                    <Form reply>
+                        <Form.TextArea/>
+                        <Button content='Add Comment' labelPosition='left' icon='edit' primary/>
+                    </Form>
+                </Comment.Group>
             </Container>
         )
     }

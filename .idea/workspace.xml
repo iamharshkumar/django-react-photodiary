@@ -3,12 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d2123e65-3081-4ea8-8373-1b718961430d" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/core/migrations/0005_auto_20200209_2140.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/PostPic/lucas-sandor-cFUFULL8Iog-unsplash.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/PostCreate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/PostCreate.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/containers/PostDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/PostDetail.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/containers/Posts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Posts.js" afterDir="false" />
     </list>
@@ -72,7 +68,8 @@
       <workItem from="1581068753752" duration="164000" />
       <workItem from="1581169256703" duration="20377000" />
       <workItem from="1581259662318" duration="1355000" />
-      <workItem from="1581261718427" duration="5538000" />
+      <workItem from="1581261718427" duration="7633000" />
+      <workItem from="1581693683701" duration="527000" />
     </task>
     <task id="LOCAL-00001" summary="add post detail">
       <created>1581263979164</created>
@@ -81,7 +78,21 @@
       <option name="project" value="LOCAL" />
       <updated>1581263979164</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add authentication">
+      <created>1581267367496</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1581267367496</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add userId when post create">
+      <created>1581268659493</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1581268659493</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -90,13 +101,15 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="add post detail" />
-    <option name="LAST_COMMIT_MESSAGE" value="add post detail" />
+    <MESSAGE value="add authentication" />
+    <MESSAGE value="add userId when post create" />
+    <option name="LAST_COMMIT_MESSAGE" value="add userId when post create" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1581263977904">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1581268657278">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1581263977904" />
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1581268657278" />
     <state width="1323" height="162" key="GridCell.Tab.0.bottom" timestamp="1580908817872">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -117,10 +130,10 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="184" y="12" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1580911354973" />
-    <state x="275" y="103" key="Vcs.Push.Dialog.v2" timestamp="1581263984676">
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2" timestamp="1581268661525">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="103" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1581263984676" />
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1581268661525" />
     <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1581265618891">
       <screen x="0" y="0" width="1366" height="738" />
     </state>

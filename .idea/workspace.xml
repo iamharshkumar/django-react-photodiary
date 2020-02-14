@@ -5,8 +5,8 @@
       <change afterPath="$PROJECT_DIR$/core/migrations/0005_auto_20200209_2140.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/media/PostPic/lucas-sandor-cFUFULL8Iog-unsplash.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/PostDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/PostDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/Posts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Posts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/serializers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +69,7 @@
       <workItem from="1581169256703" duration="20377000" />
       <workItem from="1581259662318" duration="1355000" />
       <workItem from="1581261718427" duration="7633000" />
-      <workItem from="1581693683701" duration="527000" />
+      <workItem from="1581693683701" duration="3553000" />
     </task>
     <task id="LOCAL-00001" summary="add post detail">
       <created>1581263979164</created>
@@ -92,7 +92,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581268659493</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="style the comments">
+      <created>1581694337811</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1581694337811</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -103,13 +110,14 @@
     <MESSAGE value="add post detail" />
     <MESSAGE value="add authentication" />
     <MESSAGE value="add userId when post create" />
-    <option name="LAST_COMMIT_MESSAGE" value="add userId when post create" />
+    <MESSAGE value="style the comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="style the comments" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1581268657278">
+    <state x="308" y="0" key="CommitChangelistDialog2" timestamp="1581694336193">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1581268657278" />
+    <state x="308" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1581694336193" />
     <state width="1323" height="162" key="GridCell.Tab.0.bottom" timestamp="1580908817872">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -130,10 +138,10 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="184" y="12" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1580911354973" />
-    <state x="275" y="103" key="Vcs.Push.Dialog.v2" timestamp="1581268661525">
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2" timestamp="1581694339997">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="103" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1581268661525" />
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1581694339997" />
     <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1581265618891">
       <screen x="0" y="0" width="1366" height="738" />
     </state>

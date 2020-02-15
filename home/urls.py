@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from django.conf.urls.static import static
-from core.views import UserIDView, CommentView
+from core.views import UserIDView, CommentView, UserProfileView
 
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
@@ -12,15 +12,16 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include("core.urls")),
     path('api/user-id/', UserIDView.as_view(), name='user-id'),
-    path('api/comment/', CommentView.as_view(), name='comment')
+    path('api/comment/', CommentView.as_view(), name='comment'),
+    # path('api/user-profile/', UserProfileView.as_view(), name='profile'),
+    path('api/profile/<username>/', UserProfileView.as_view(), name='profile')
 
     # re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
 ]
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if not settings.DEBUG:
     urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
-    ]
+                    ]

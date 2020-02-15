@@ -62,7 +62,7 @@ class PostDetail extends Component {
 
     render() {
         const {post} = this.state;
-
+        console.log(post.image)
         return (
             <Container>
                 <Image src={post.image} size="large" rounded/>
@@ -77,7 +77,7 @@ class PostDetail extends Component {
                     {post.comments && post.comments.map(comment => {
                         return (
                             <Comment>
-                                <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg'/>
+                                <Comment.Avatar src={`http://127.0.0.1:8000/media/${comment.profile_pic}`}/>
                                 <Comment.Content>
                                     <Comment.Author as='a'>{comment.user}</Comment.Author>
                                     <Comment.Metadata>

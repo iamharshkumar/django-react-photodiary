@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 
 # Create your models here.
@@ -11,7 +12,13 @@ class UserProfile(models.Model):
     profile_pic = models.ImageField(upload_to='profile_pix', null=True, blank=True)
 
     def __str__(self):
-        return self.first_name + self.last_name
+        return self.user.username
+
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserProfile.objects.create(user=instance)
+
+    post_save.connect(create_user_profile, sender=User)
 
 
 class Post(models.Model):
@@ -31,4 +38,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment
-

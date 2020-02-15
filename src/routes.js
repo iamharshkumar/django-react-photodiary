@@ -7,6 +7,7 @@ import Signup from "./containers/Signup";
 import Posts from "./containers/Posts";
 import PostCreate from "./containers/PostCreate";
 import PostDetail from "./containers/PostDetail";
+import UserProfile from "./containers/UserProfile";
 
 const BaseRouter = () => (
   <Hoc>
@@ -15,6 +16,7 @@ const BaseRouter = () => (
     <Route exact path="/" component={Posts} />
     <Route exact path="/create" component={PostCreate} />
     <Route path="/post/:id" component={PostDetail} />
+    <Route path="/profile/:username" component={UserProfile} />
   </Hoc>
 );
 

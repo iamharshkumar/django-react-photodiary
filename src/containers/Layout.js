@@ -13,8 +13,24 @@ import {
 import {Link, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {logout} from "../store/actions/auth";
+import {authAxios} from "../utils";
+import {UserIdURL} from "../store/constants";
 
 class CustomLayout extends React.Component {
+    state = {
+        username: ""
+    };
+
+    componentDidMount() {
+        authAxios.get(UserIdURL)
+            .then(res => {
+                this.setState({username: res.data.username})
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     render() {
         const {authenticated} = this.props;
         return (
@@ -27,6 +43,12 @@ class CustomLayout extends React.Component {
                         {authenticated ? (
                             <Link to="/create">
                                 <Menu.Item header>Post</Menu.Item>
+                            </Link>
+                        ) : ''
+                        }
+                        {authenticated ? (
+                            <Link to={`/profile/${this.state.username}`}>
+                                <Menu.Item header>Profile</Menu.Item>
                             </Link>
                         ) : ''
                         }

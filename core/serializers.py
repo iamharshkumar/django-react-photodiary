@@ -10,7 +10,7 @@ class CommentSerializers(serializers.ModelSerializer):
         fields = ('author', 'user', 'comment', 'post')
 
     def get_user(self, obj):
-        return str(obj.author.username)
+        return str(obj.author.user.username)
 
 
 class PostSerializers(serializers.ModelSerializer):

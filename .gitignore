@@ -6,4 +6,6 @@ node_modules
 build
 static
 package-lock.json
-./core/migrations
+.idea
+media
+/core/migrations

@@ -3,9 +3,16 @@ from .models import Post, Comment, UserProfile
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    posts = serializers.SerializerMethodField()
+
     class Meta:
         model = UserProfile
-        fields = ('user', 'first_name', 'last_name', 'profile_pic')
+        fields = ('user', 'first_name', 'last_name', 'profile_pic', 'posts')
+
+    def get_posts(self, obj):
+        p_qs = Post.objects.filter(user=obj.id)
+        posts = PostSerializers(p_qs, many=True).data
+        return posts
 
 
 class CommentSerializers(serializers.ModelSerializer):

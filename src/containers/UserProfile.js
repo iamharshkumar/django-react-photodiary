@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {authAxios} from "../utils";
-import {Container, Card, Image, Icon} from "semantic-ui-react";
+import {Container, Card, Image, Icon, Grid} from "semantic-ui-react";
 import {profileView} from "../store/constants";
 
 class UserProfile extends Component {
@@ -26,9 +26,7 @@ class UserProfile extends Component {
         return (
             <Container>
                 <Card>
-
-                        <Image src={`http://127.0.0.1:8000${data.profile_pic}`} wrapped ui={false}/>
-
+                    <Image src={`http://127.0.0.1:8000${data.profile_pic}`} wrapped ui={false}/>
                     <Card.Content>
                         <Card.Header>{data.first_name + " " + data.last_name}</Card.Header>
                         <Card.Meta>
@@ -45,6 +43,20 @@ class UserProfile extends Component {
                         </a>
                     </Card.Content>
                 </Card>
+                <Grid>
+                    <Grid.Row columns={3}>
+                        {
+                            data.posts && data.posts.map(post => {
+                                return (
+                                    <Grid.Column>
+                                        <Image src={`http://127.0.0.1:8000${post.image}`}/>
+                                    </Grid.Column>
+                                )
+                            })
+                        }
+
+                    </Grid.Row>
+                </Grid>
             </Container>
         )
     }

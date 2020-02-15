@@ -65,7 +65,7 @@ class PostDetail extends Component {
         console.log(post.image)
         return (
             <Container>
-                <Image src={post.image} size="large" rounded/>
+                <Image src={post.image} size="huge" rounded centered/>
                 <h3>{post.post_name}</h3>
                 <p>{post.description}</p>
 

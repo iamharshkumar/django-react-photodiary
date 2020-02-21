@@ -13,8 +13,8 @@ urlpatterns = [
     path('api/', include("core.urls")),
     path('api/user-id/', UserIDView.as_view(), name='user-id'),
     path('api/comment/', CommentView.as_view(), name='comment'),
-    # path('api/user-profile/', UserProfileView.as_view(), name='profile'),
-    path('api/profile/<username>/', UserProfileView.as_view(), name='profile')
+    path('api/profile/<username>/', UserProfileView.as_view(), name='profile'),
+    path('api/profile/<username>/follow/', UserProfileView.as_view(), name='follow')
 
     # re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
 ]

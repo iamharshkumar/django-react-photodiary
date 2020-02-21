@@ -10,6 +10,7 @@ class UserProfile(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     profile_pic = models.ImageField(upload_to='profile_pix', null=True, blank=True)
+    followers = models.ManyToManyField(User, related_name='following', blank=True)
 
     def __str__(self):
         return self.user.username

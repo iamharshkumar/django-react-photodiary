@@ -4,6 +4,11 @@ from django.db.models.signals import post_save
 
 
 # Create your models here.
+# class PostLike(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     post = models.ForeignKey("Post", on_delete=models.CASCADE)
+#     timestamp = models.DateTimeField(auto_now_add=True)
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -26,6 +31,7 @@ class Post(models.Model):
     user = models.ForeignKey('UserProfile', on_delete=models.CASCADE)
     post_name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='PostPic/', null=False, blank=False)
+    likes = models.ManyToManyField(User, related_name='post_user', blank=True)
     description = models.CharField(max_length=500)
 
     def __str__(self):

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Container, Image, Comment, Header, Form, Button} from "semantic-ui-react";
-import {createComment, postDetailURL, postListURL, UserIdURL} from "../store/constants";
+import {createComment, likes, postDetailURL, postListURL, UserIdURL} from "../store/constants";
 import {authAxios} from "../utils";
 
 class PostDetail extends Component {
@@ -8,7 +8,8 @@ class PostDetail extends Component {
         post: {},
         comments: null,
         user: null,
-        comment: ''
+        comment: '',
+        action: ''
     };
 
     componentDidMount() {
@@ -60,6 +61,31 @@ class PostDetail extends Component {
         this.setState({comment: e.target.value})
     };
 
+    likes = () => {
+        const {post} = this.state;
+
+        if (post.is_like) {
+            this.likesHandle("unlike")
+        } else {
+            this.likesHandle("like")
+        }
+    }
+
+    likesHandle = (value) => {
+        const {id} = this.props.match.params;
+
+        this.setState({action: value}, () => {
+            authAxios.post(likes, {"post_id": id, "action": this.state.action})
+                .then(res => {
+                    console.log(res.data)
+                    this.setState({post: res.data})
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        })
+    }
+
     render() {
         const {post} = this.state;
         console.log(post.image)
@@ -68,6 +94,12 @@ class PostDetail extends Component {
                 <Image src={post.image} size="huge" rounded centered/>
                 <h3>{post.post_name}</h3>
                 <p>{post.description}</p>
+                <hr/>
+                <p><b>{post.likes_count} likes</b></p>
+                {
+                    post.is_like ? <Button onClick={this.likes} primary>Unlike</Button> :
+                        <Button onClick={this.likes} primary>Like</Button>
+                }
 
                 <Comment.Group>
                     <Header as='h3' dividing>

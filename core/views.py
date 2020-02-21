@@ -28,7 +28,6 @@ class UserProfileView(APIView):
         user_profile = UserProfile.objects.get(user__username=username)
         data = request.data
         action = data.get("action")
-        print(action)
         me = request.user
         if user_profile != me:
             if action == "follow":
@@ -57,3 +56,22 @@ class CommentView(CreateAPIView):
     serializer_class = CommentSerializers
     permission_classes = (IsAuthenticated,)
     queryset = Comment.objects.all()
+
+
+class LikesView(APIView):
+
+    def post(self, request):
+        user = request.user
+        data = request.data
+        action = data.get("action")
+        post_id = data.get("post_id")
+        post_obj = Post.objects.get(id=post_id)
+        print(action, post_id)
+        if post_obj:
+            if action == "like":
+                post_obj.likes.add(user)
+            elif action == "unlike":
+                post_obj.likes.remove(user)
+
+        serializer = PostSerializers(instance=post_obj, context={"request": request})
+        return Response(serializer.data, status=HTTP_200_OK)

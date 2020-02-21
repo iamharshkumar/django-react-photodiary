@@ -56,12 +56,27 @@ class CommentSerializers(serializers.ModelSerializer):
 
 class PostSerializers(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
+    likes_count = serializers.SerializerMethodField()
+    is_like = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = ('id', 'user', 'post_name', 'image', 'description', 'comments')
+        fields = ('id', 'user', 'post_name', 'image', 'description', 'likes_count', 'is_like', 'comments')
+
+    def get_is_like(self, obj):
+        is_like = False
+        context = self.context
+        request = context.get("request")
+        # print(request)
+        if request:
+            user = request.user
+            is_like = user in obj.likes.all()
+        return is_like
 
     def get_comments(self, obj):
         c_qs = Comment.objects.filter(post_id=obj.id)
         comments = CommentSerializers(c_qs, many=True).data
         return comments
+
+    def get_likes_count(self, obj):
+        return obj.likes.all().count()

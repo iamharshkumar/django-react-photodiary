@@ -54,6 +54,13 @@ class CustomLayout extends React.Component {
                         }
 
                         {authenticated ? (
+                            <Link to={`/userfeed/`}>
+                                <Menu.Item header>UserFeed</Menu.Item>
+                            </Link>
+                        ) : ''
+                        }
+
+                        {authenticated ? (
                             <div>
                                 <Menu.Item header onClick={() => this.props.logout()}>
                                     Logout

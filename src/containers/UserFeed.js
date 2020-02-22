@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {Container, Grid, Image} from 'semantic-ui-react';
 import axios from 'axios';
-import {postListURL} from "../store/constants";
+import {postListURL, userFeed} from "../store/constants";
 import {Link} from 'react-router-dom';
 import {authAxios} from "../utils";
 import './grid.css';
 import StackGrid from "react-stack-grid";
 
-class Posts extends Component {
+class UserFeed extends Component {
 
 
     constructor(props) {
@@ -33,7 +33,7 @@ class Posts extends Component {
     }
 
     postList() {
-        authAxios.get(postListURL)
+        authAxios.get(userFeed)
             .then(res => {
                 console.log(res.data);
                 this.setState({posts: res.data});
@@ -66,7 +66,7 @@ class Posts extends Component {
                     return (
                         <div  key={`key${post.id + 1}`}>
                             <Link to={`/post/${post.id}`}>
-                                <img style={{borderRadius: "100px"}} style={{width: "250px"}} src={post.image} alt=""/>
+                                <img style={{borderRadius: "100px"}} style={{width: "250px"}} src={`http://127.0.0.1:8000${post.image}`} alt=""/>
                             </Link>
                         </div>
                     )
@@ -77,4 +77,4 @@ class Posts extends Component {
     }
 }
 
-export default Posts
+export default UserFeed

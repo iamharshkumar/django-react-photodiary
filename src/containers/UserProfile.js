@@ -79,7 +79,7 @@ class UserProfile extends Component {
                                 <span>
                                     <Icon name='edit'/> Edit
                                 </span>
-                            </Link> : ""
+                                </Link> : ""
                             }
 
                         </Card.Header>
@@ -99,9 +99,12 @@ class UserProfile extends Component {
                         </a>
                     </Card.Content>
                     <Card.Content extra>
-
-                        {data.is_following ? <Button onClick={this.follow} primary fluid> Unfollow </Button> :
-                            <Button onClick={this.follow} primary fluid> Follow </Button>}
+                        {
+                            this.state.user === data.user ? '' : <div>
+                                {data.is_following ? <Button onClick={this.follow} primary fluid> Unfollow </Button> :
+                                    <Button onClick={this.follow} primary fluid> Follow </Button>}
+                            </div>
+                        }
 
 
                     </Card.Content>

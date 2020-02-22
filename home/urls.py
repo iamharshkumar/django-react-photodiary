@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from django.conf.urls.static import static
-from core.views import UserIDView, CommentView, UserProfileView, LikesView, UserProfileEditView
+from core.views import UserIDView, CommentView, UserProfileView, LikesView, UserProfileEditView, FollowingUserPosts
 
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
@@ -16,7 +16,8 @@ urlpatterns = [
     path('api/profile/<username>/', UserProfileView.as_view(), name='profile'),
     path('api/profile/<username>/follow/', UserProfileView.as_view(), name='follow'),
     path('api/likes/', LikesView.as_view(), name='follow'),
-    path('api/profile/<pk>/edit/', UserProfileEditView.as_view(), name='profile-edit')
+    path('api/profile/<pk>/edit/', UserProfileEditView.as_view(), name='profile-edit'),
+    path('api/userfeed/', FollowingUserPosts.as_view(), name='profile-edit'),
 
 ]
 

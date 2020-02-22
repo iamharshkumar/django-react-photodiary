@@ -7,6 +7,7 @@ from rest_framework.status import HTTP_200_OK
 from rest_framework.response import Response
 from .serializers import PostSerializers, CommentSerializers, UserProfileSerializer
 from .models import Post, Comment, UserProfile
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -47,6 +48,15 @@ class PostViewSets(viewsets.ModelViewSet):
     serializer_class = PostSerializers
     permission_classes = (IsAuthenticated,)
     queryset = Post.objects.order_by('-created')
+
+
+class FollowingUserPosts(APIView):
+
+    def get(self, request):
+        i_following = self.request.user.following.all()
+        qs = Post.objects.filter(user__in=i_following).order_by('-created')
+        serializer = PostSerializers(qs, many=True).data
+        return Response(serializer, status=HTTP_200_OK)
 
 
 class CommentView(CreateAPIView):

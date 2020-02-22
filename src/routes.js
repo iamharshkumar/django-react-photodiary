@@ -9,6 +9,7 @@ import PostCreate from "./containers/PostCreate";
 import PostDetail from "./containers/PostDetail";
 import UserProfile from "./containers/UserProfile";
 import ProfileForm from "./containers/ProfileForm";
+import UserFeed from "./containers/UserFeed";
 
 const BaseRouter = () => (
   <Hoc>
@@ -19,6 +20,7 @@ const BaseRouter = () => (
     <Route path="/post/:id" component={PostDetail} />
     <Route path="/profile/:username" component={UserProfile} />
     <Route path="/profiles/:username/edit" component={ProfileForm} />
+    <Route path="/userfeed/" component={UserFeed} />
   </Hoc>
 );
 

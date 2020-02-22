@@ -11,3 +11,4 @@ export const createComment = `${endpoint}/comment/`;
 export const profileView = (username) => `${endpoint}/profile/${username}`;
 export const userFollow = (username) => `${endpoint}/profile/${username}/follow/`;
 export const likes = `${endpoint}/likes/`;
+export const updateProfile = (id) => `${endpoint}/profile/${id}/edit/`;

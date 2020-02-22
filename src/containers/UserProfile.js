@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import {authAxios} from "../utils";
-import {Container, Card, Image, Icon, Grid, Button} from "semantic-ui-react";
-import {profileView, userFollow} from "../store/constants";
+import {Container, Card, Image, Icon, Grid, Button, Segment} from "semantic-ui-react";
+import {profileView, userFollow, UserIdURL} from "../store/constants";
+import {Link} from "react-router-dom";
+import StackGrid from "react-stack-grid";
+
 
 class UserProfile extends Component {
     state = {
         data: {},
-        action: ""
+        action: "",
+        user: ''
     };
 
     componentDidMount() {
@@ -16,6 +20,15 @@ class UserProfile extends Component {
 
                 this.setState({data: res.data.data})
                 console.log(this.state.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+        authAxios.get(UserIdURL)
+            .then(res => {
+                console.log(res.data)
+                this.setState({user: res.data.userID})
             })
             .catch(err => {
                 console.log(err)
@@ -51,10 +64,25 @@ class UserProfile extends Component {
         const {username} = this.props.match.params;
         return (
             <Container>
-                <Card>
-                    <Image src={`${data.profile_pic}`} wrapped ui={false}/>
+                <Card centered>
+                    {
+                        data.profile_pic ?
+                            <Image src={`${data.profile_pic}`} wrapped ui={false} size='medium' circular centered/> :
+                            <Segment><Image src='https://react.semantic-ui.com/images/wireframe/square-image.png'
+                                            size='medium'
+                                            circular/></Segment>
+                    }
                     <Card.Content>
-                        <Card.Header>{data.first_name + " " + data.last_name}</Card.Header>
+                        <Card.Header>{data.first_name + " " + data.last_name}
+                            {
+                                this.state.user === data.user ? <Link to={`/profiles/${username}/edit`}>
+                                <span>
+                                    <Icon name='edit'/> Edit
+                                </span>
+                            </Link> : ""
+                            }
+
+                        </Card.Header>
                         <Card.Meta>
                             <span className='date'>{data.username}</span>
                         </Card.Meta>
@@ -73,25 +101,27 @@ class UserProfile extends Component {
                     <Card.Content extra>
 
                         {data.is_following ? <Button onClick={this.follow} primary fluid> Unfollow </Button> :
-                        <Button onClick={this.follow} primary fluid> Follow </Button>}
+                            <Button onClick={this.follow} primary fluid> Follow </Button>}
 
 
                     </Card.Content>
                 </Card>
-                <Grid>
-                    <Grid.Row columns={3}>
-                        {
-                            data.posts && data.posts.map(post => {
-                                return (
-                                    <Grid.Column>
-                                        <Image src={`http://127.0.0.1:8000${post.image}`}/>
-                                    </Grid.Column>
-                                )
-                            })
-                        }
+                {
+                    <StackGrid columnWidth={300}>
+                        {data.posts && data.posts.map(post => {
+                            return (
+                                <div key={`key${post.id + 1}`}>
+                                    <Link to={`/post/${post.id}`}>
+                                        <img style={{borderRadius: "100px"}} style={{width: "300px"}}
+                                             src={`http://127.0.0.1:8000${post.image}`} alt=""/>
+                                    </Link>
+                                </div>
+                            )
+                        })}
+                    </StackGrid>
+                }
 
-                    </Grid.Row>
-                </Grid>
+
             </Container>
         )
     }

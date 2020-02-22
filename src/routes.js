@@ -8,6 +8,7 @@ import Posts from "./containers/Posts";
 import PostCreate from "./containers/PostCreate";
 import PostDetail from "./containers/PostDetail";
 import UserProfile from "./containers/UserProfile";
+import ProfileForm from "./containers/ProfileForm";
 
 const BaseRouter = () => (
   <Hoc>
@@ -17,6 +18,7 @@ const BaseRouter = () => (
     <Route exact path="/create" component={PostCreate} />
     <Route path="/post/:id" component={PostDetail} />
     <Route path="/profile/:username" component={UserProfile} />
+    <Route path="/profiles/:username/edit" component={ProfileForm} />
   </Hoc>
 );
 

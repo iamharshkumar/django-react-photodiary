@@ -25,7 +25,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return is_following
 
     def get_posts(self, obj):
-        p_qs = Post.objects.filter(user=obj.id)
+        p_qs = Post.objects.filter(user=obj.id).order_by('-created')
         posts = PostSerializers(p_qs, many=True).data
         return posts
 

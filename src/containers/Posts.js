@@ -4,14 +4,32 @@ import axios from 'axios';
 import {postListURL} from "../store/constants";
 import {Link} from 'react-router-dom';
 import {authAxios} from "../utils";
+import './grid.css';
+import StackGrid from "react-stack-grid";
 
 class Posts extends Component {
-    state = {
-        posts: []
-    };
+
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            posts: [],
+            spans: 0
+        };
+
+
+        this.imageRef = React.createRef();
+
+    }
 
     componentDidMount() {
         this.postList()
+
+        console.log(this.imageRef)
+        // this.setSpans()
+        // this.imageRef.current.addEventListener('load', this.setSpans);
+
+
     }
 
     postList() {
@@ -23,29 +41,38 @@ class Posts extends Component {
             .catch(err => {
                 console.log(err)
             })
+
+    }
+
+    setSpans = () => {
+        const height = this.imageRef.current.clientHeight;
+        const spans = Math.ceil(height / 10);
+
+        this.setState({spans})
+    }
+
+    cool = (e) => {
+        console.log(e.target.value)
+
     }
 
     render() {
         const {posts} = this.state;
+
         return (
-            <Container>
-                <Grid>
-                    <Grid.Row columns={4}>
-                        {posts.map(post => {
-                            return (
 
-                                <Grid.Column key={post.id}>
-                                    <Link to={`/post/${post.id}`}>
-                                        <Image src={post.image} size="medium" rounded/>
+            <StackGrid columnWidth={250}>
+                {posts.map(post => {
+                    return (
+                        <div  key={`key${post.id + 1}`}>
+                            <Link to={`/post/${post.id}`}>
+                                <img style={{borderRadius: "100px"}} style={{width: "250px"}} src={post.image} alt=""/>
+                            </Link>
+                        </div>
+                    )
+                })}
+            </StackGrid>
 
-                                    </Link>
-                                </Grid.Column>
-
-                            )
-                        })}
-                    </Grid.Row>
-                </Grid>
-            </Container>
         )
     }
 }

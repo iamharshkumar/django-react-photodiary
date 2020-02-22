@@ -33,6 +33,8 @@ class Post(models.Model):
     image = models.ImageField(upload_to='PostPic/', null=False, blank=False)
     likes = models.ManyToManyField(User, related_name='post_user', blank=True)
     description = models.CharField(max_length=500)
+    updated = models.DateTimeField(auto_now=True, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
         return self.post_name

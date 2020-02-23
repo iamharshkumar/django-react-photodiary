@@ -1,8 +1,8 @@
-const localhost = "http://127.0.0.1:8000";
+export const URL = "http://127.0.0.1:8000";
 
 const apiURL ='/api';
 
-export const endpoint =`${localhost}${apiURL}`;
+export const endpoint =`${URL}${apiURL}`;
 
 export const postListURL =`${endpoint}/posts/`;
 export const postDetailURL = (id) => `${endpoint}/posts/${id}`;

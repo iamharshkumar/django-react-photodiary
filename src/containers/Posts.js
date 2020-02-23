@@ -4,8 +4,8 @@ import axios from 'axios';
 import {postListURL} from "../store/constants";
 import {Link} from 'react-router-dom';
 import {authAxios} from "../utils";
-import './grid.css';
 import StackGrid from "react-stack-grid";
+import {URL} from "../store/constants";
 
 class Posts extends Component {
 
@@ -61,12 +61,12 @@ class Posts extends Component {
 
         return (
 
-            <StackGrid columnWidth={250} gutterWidth={10}>
+            <StackGrid columnWidth={200} gutterWidth={10}>
                 {posts.map(post => {
                     return (
                         <div  key={`key${post.id + 1}`}>
                             <Link to={`/post/${post.id}`}>
-                                <img style={{borderRadius: "100px"}} style={{width: "250px"}} src={post.image} alt=""/>
+                                <img style={{width: "200px", borderRadius:"10px"}} src={post.image} alt=""/>
                             </Link>
                         </div>
                     )

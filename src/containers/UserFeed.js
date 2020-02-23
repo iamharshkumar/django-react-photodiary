@@ -4,8 +4,8 @@ import axios from 'axios';
 import {postListURL, userFeed} from "../store/constants";
 import {Link} from 'react-router-dom';
 import {authAxios} from "../utils";
-import './grid.css';
 import StackGrid from "react-stack-grid";
+import {URL} from "../store/constants";
 
 class UserFeed extends Component {
 
@@ -66,7 +66,7 @@ class UserFeed extends Component {
                     return (
                         <div  key={`key${post.id + 1}`}>
                             <Link to={`/post/${post.id}`}>
-                                <img style={{borderRadius: "100px"}} style={{width: "250px"}} src={`http://127.0.0.1:8000${post.image}`} alt=""/>
+                                <img style={{width: "250px",borderRadius:"10px"}} src={`${URL}${post.image}`} alt=""/>
                             </Link>
                         </div>
                     )

@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -7,7 +6,6 @@ from rest_framework.status import HTTP_200_OK
 from rest_framework.response import Response
 from .serializers import PostSerializers, CommentSerializers, UserProfileSerializer
 from .models import Post, Comment, UserProfile
-from django.contrib.auth.models import User
 
 
 # Create your views here.

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Container, Image, Comment, Header, Form, Button} from "semantic-ui-react";
 import {createComment, likes, postDetailURL, postListURL, UserIdURL} from "../store/constants";
 import {authAxios} from "../utils";
+import {URL} from "../store/constants";
 
 class PostDetail extends Component {
     state = {
@@ -109,7 +110,7 @@ class PostDetail extends Component {
                     {post.comments && post.comments.map(comment => {
                         return (
                             <Comment>
-                                <Comment.Avatar src={`http://127.0.0.1:8000/media/${comment.profile_pic}`}/>
+                                <Comment.Avatar src={`${URL}/media/${comment.profile_pic}`}/>
                                 <Comment.Content>
                                     <Comment.Author as='a'>{comment.user}</Comment.Author>
                                     <Comment.Metadata>

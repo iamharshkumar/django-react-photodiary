@@ -4,6 +4,7 @@ import {Container, Card, Image, Icon, Grid, Button, Segment} from "semantic-ui-r
 import {profileView, userFollow, UserIdURL} from "../store/constants";
 import {Link} from "react-router-dom";
 import StackGrid from "react-stack-grid";
+import {URL} from "../store/constants";
 
 
 class UserProfile extends Component {
@@ -110,13 +111,13 @@ class UserProfile extends Component {
                     </Card.Content>
                 </Card>
                 {
-                    <StackGrid columnWidth={300}>
+                    <StackGrid columnWidth={200}>
                         {data.posts && data.posts.map(post => {
                             return (
                                 <div key={`key${post.id + 1}`}>
                                     <Link to={`/post/${post.id}`}>
-                                        <img style={{borderRadius: "100px"}} style={{width: "300px"}}
-                                             src={`http://127.0.0.1:8000${post.image}`} alt=""/>
+                                        <img style={{width: "200px", borderRadius:"10px"}}
+                                             src={`${URL}${post.image}`} alt=""/>
                                     </Link>
                                 </div>
                             )

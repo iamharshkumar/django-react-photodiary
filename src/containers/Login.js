@@ -30,8 +30,9 @@ class LoginForm extends React.Component {
   render() {
     const { error, loading, token } = this.props;
     const { username, password } = this.state;
-    if (token) {
-      return <Redirect to="/" />;
+    const Token = localStorage.getItem("token")
+    if (Token) {
+      this.props.history.push("/")
     }
     return (
       <Grid

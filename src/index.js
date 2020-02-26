@@ -2,24 +2,26 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-import { createStore, compose, applyMiddleware, combineReducers } from "redux";
-import { Provider } from "react-redux";
+import {createStore, compose, applyMiddleware, combineReducers} from "redux";
+import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 
 import authReducer from "./store/reducers/auth";
+import postsReducer from "./store/reducers/posts";
 
 const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  auth: authReducer
+    auth: authReducer,
+    posts: postsReducer
 });
 
 const store = createStore(rootReducer, composeEnhances(applyMiddleware(thunk)));
 
 const app = (
-  <Provider store={store}>
-    <App />
-  </Provider>
+    <Provider store={store}>
+        <App/>
+    </Provider>
 );
 
 ReactDOM.render(app, document.getElementById("root"));

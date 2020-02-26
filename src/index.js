@@ -8,12 +8,14 @@ import thunk from "redux-thunk";
 
 import authReducer from "./store/reducers/auth";
 import postsReducer from "./store/reducers/posts";
+import userFeed from "./store/reducers/userFeed";
 
 const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    posts: postsReducer
+    posts: postsReducer,
+    userFeed: userFeed
 });
 
 const store = createStore(rootReducer, composeEnhances(applyMiddleware(thunk)));

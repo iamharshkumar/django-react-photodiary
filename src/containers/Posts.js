@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
-import {Container, Grid, Image} from 'semantic-ui-react';
-import axios from 'axios';
-import {postListURL} from "../store/constants";
 import {Link} from 'react-router-dom';
-import {authAxios} from "../utils";
 import StackGrid from "react-stack-grid";
-import {URL} from "../store/constants";
 import {connect} from 'react-redux';
 import {postsFetch} from "../store/actions/posts";
 

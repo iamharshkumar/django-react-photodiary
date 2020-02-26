@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView
 from rest_framework.status import HTTP_200_OK
 from rest_framework.response import Response
 from .serializers import PostSerializers, CommentSerializers, UserProfileSerializer
@@ -42,9 +42,9 @@ class UserIDView(APIView):
         return Response({'userID': request.user.id, 'username': request.user.username}, status=HTTP_200_OK)
 
 
-class PostViewSets(viewsets.ModelViewSet):
+class PostViewSets(ListAPIView):
     serializer_class = PostSerializers
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     queryset = Post.objects.order_by('-created')
 
 

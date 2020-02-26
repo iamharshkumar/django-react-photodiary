@@ -2,7 +2,7 @@
 import { updateObject } from "../utility";
 
 const initialState = {
-  token: null,
+  token: localStorage.getItem("token"),
   error: null,
   loading: false
 };

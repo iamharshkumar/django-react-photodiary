@@ -1,72 +1,30 @@
 import React, {Component} from 'react';
-import {Container, Grid, Image} from 'semantic-ui-react';
-import axios from 'axios';
-import {postListURL} from "../store/constants";
 import {Link} from 'react-router-dom';
-import {authAxios} from "../utils";
 import StackGrid from "react-stack-grid";
-import {URL} from "../store/constants";
+import {connect} from 'react-redux';
+import {postsFetch} from "../store/actions/posts";
 
 class Posts extends Component {
 
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            posts: [],
-            spans: 0
-        };
-
-
-        this.imageRef = React.createRef();
-
-    }
-
     componentDidMount() {
-        this.postList()
-
-        console.log(this.imageRef)
-        // this.setSpans()
-        // this.imageRef.current.addEventListener('load', this.setSpans);
-
-
-    }
-
-    postList() {
-        authAxios.get(postListURL)
-            .then(res => {
-                console.log(res.data);
-                this.setState({posts: res.data});
-            })
-            .catch(err => {
-                console.log(err)
-            })
-
-    }
-
-    setSpans = () => {
-        const height = this.imageRef.current.clientHeight;
-        const spans = Math.ceil(height / 10);
-
-        this.setState({spans})
-    }
-
-    cool = (e) => {
-        console.log(e.target.value)
-
+        this.props.fetchPosts()
     }
 
     render() {
-        const {posts} = this.state;
+        const {posts} = this.props;
 
+        if (!posts) {
+            return <div>
+                Loading...
+            </div>
+        }
         return (
-
             <StackGrid columnWidth={200} gutterWidth={10}>
                 {posts.map(post => {
                     return (
-                        <div  key={`key${post.id + 1}`}>
+                        <div key={`key${post.id + 1}`}>
                             <Link to={`/post/${post.id}`}>
-                                <img style={{width: "200px", borderRadius:"10px"}} src={post.image} alt=""/>
+                                <img style={{width: "200px", borderRadius: "10px"}} src={post.image} alt=""/>
                             </Link>
                         </div>
                     )
@@ -77,4 +35,17 @@ class Posts extends Component {
     }
 }
 
-export default Posts
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token,
+        posts: state.posts.posts
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchPosts: () => dispatch(postsFetch())
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Posts)

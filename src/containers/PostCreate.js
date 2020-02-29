@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Container, Form, Checkbox, Button} from "semantic-ui-react";
 import axios from "axios";
-import {postListURL, UserIdURL} from "../store/constants";
+import {postCreateURL, postListURL, UserIdURL} from "../store/constants";
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {authAxios} from "../utils";
@@ -27,11 +27,11 @@ class PostCreate extends Component {
 
     postSubmit = () => {
         let form_data = new FormData();
-        form_data.append('user', this.state.user);
+        form_data.append('user', this.props.user.userID);
         form_data.append('post_name', this.state.post_name);
         form_data.append('image', this.state.image, this.state.image.name);
         form_data.append('description', this.state.description);
-        authAxios.post(postListURL, form_data)
+        axios.post(postCreateURL, form_data)
             .then(res => {
                 console.log(res.data)
             })
@@ -81,7 +81,8 @@ class PostCreate extends Component {
 
 const mapStateToProps = state => {
     return {
-        authenticated: state.auth.token !== null
+        authenticated: state.auth.token !== null,
+        user: state.user.userId
     }
 };
 

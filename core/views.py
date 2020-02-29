@@ -44,11 +44,15 @@ class UserIDView(APIView):
 
 class PostViewSets(ListAPIView):
     serializer_class = PostSerializers
-    # permission_classes = (IsAuthenticated,)
     queryset = Post.objects.order_by('-created')
 
 
 class PostDetailView(RetrieveAPIView):
+    serializer_class = PostSerializers
+    queryset = Post.objects.all()
+
+
+class PostCreateView(CreateAPIView):
     serializer_class = PostSerializers
     queryset = Post.objects.all()
 

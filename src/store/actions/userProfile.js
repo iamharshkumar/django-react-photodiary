@@ -1,23 +1,23 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
-import {UserIdURL} from "../constants";
+import {profileView} from "../constants";
 
-const userId = (data) => {
+const userProfile = (userProfile) => {
     return {
-        type: actionTypes.USER_ID,
-        user: data
+        type: actionTypes.USER_PROFILE,
+        userProfile: userProfile,
     }
 };
 
-export const fetchUser = () => {
+export const profileData = (username) => {
     return dispatch => {
         axios.defaults.headers = {
             Authorization: `Token ${localStorage.getItem("token")}`
         };
-        axios.get(UserIdURL)
+        axios.get(profileView(username))
             .then(res => {
-                console.log(res.data);
-                dispatch(userId(res.data))
+                console.log(res.data)
+                dispatch(userProfile(res.data))
             })
             .catch(err => {
                 console.log(err)

@@ -5,78 +5,63 @@ import {profileView, userFollow, UserIdURL} from "../store/constants";
 import {Link} from "react-router-dom";
 import StackGrid from "react-stack-grid";
 import {URL} from "../store/constants";
+import {connect} from 'react-redux';
+import {profileData} from "../store/actions/userProfile";
+import {fetchUser} from "../store/actions/userId";
 
 
 class UserProfile extends Component {
     state = {
         data: {},
         action: "",
-        user: ''
     };
 
     componentDidMount() {
         const {username} = this.props.match.params;
-        authAxios.get(profileView(username))
-            .then(res => {
-
-                this.setState({data: res.data.data})
-                console.log(this.state.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-
-        authAxios.get(UserIdURL)
-            .then(res => {
-                console.log(res.data)
-                this.setState({user: res.data.userID})
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        this.props.profile(username);
+        this.props.fetchUser();
     }
 
     follow = () => {
-        const {data} = this.state
-        if (data.is_following) {
+        const {userData} = this.props;
+        if (userData.data && userData.data.is_following) {
             this.follower("unfollow")
         } else {
             this.follower("follow")
         }
-    }
+    };
 
     follower = (value) => {
         const {username} = this.props.match.params;
 
         this.setState({action: value}, () => {
-            authAxios.post(userFollow(username), {"action": this.state.action})
-                .then(res => {
-                    console.log(res.data.data)
-                    this.setState({data: res.data.data})
-                })
-                .then(err => {
-                    console.log(err)
-                })
         })
-    }
+    };
 
     render() {
-        const {data} = this.state;
+        const {userData} = this.props;
         const {username} = this.props.match.params;
+
+         if (!userData) {
+            return <div>
+                Loading...
+            </div>
+        }
+
         return (
             <Container>
                 <Card centered>
                     {
-                        data.profile_pic ?
-                            <Image src={`${data.profile_pic}`} wrapped ui={false} size='medium' circular centered/> :
+                        userData.data.profile_pic ?
+                            <Image src={`${userData.data && userData.data.profile_pic}`} wrapped ui={false} size='medium' circular centered/> :
                             <Segment><Image src='https://react.semantic-ui.com/images/wireframe/square-image.png'
                                             size='medium'
                                             circular/></Segment>
                     }
                     <Card.Content>
-                        <Card.Header>{data.first_name + " " + data.last_name}
+                        <Card.Header>{userData.data.first_name + " " + userData.data.last_name}
                             {
-                                this.state.user === data.user ? <Link to={`/profiles/${username}/edit`}>
+                                this.props.user.userID === userData.data.user ? <Link to={`/profiles/${username}/edit`}>
                                 <span>
                                     <Icon name='edit'/> Edit
                                 </span>
@@ -85,7 +70,7 @@ class UserProfile extends Component {
 
                         </Card.Header>
                         <Card.Meta>
-                            <span className='date'>{data.username}</span>
+                            <span className='date'>{userData.data.username}</span>
                         </Card.Meta>
                         <Card.Description>
                             Matthew is a musician living in Nashville.
@@ -94,15 +79,15 @@ class UserProfile extends Component {
                     <Card.Content extra>
                         <a>
                             <Icon name='user'/>
-                            {data.followers_count} Followers
+                            {userData.data.followers_count} Followers
                             <Icon name='user'/>
-                            {data.following_count} Following
+                            {userData.data.following_count} Following
                         </a>
                     </Card.Content>
                     <Card.Content extra>
                         {
-                            this.state.user === data.user ? '' : <div>
-                                {data.is_following ? <Button onClick={this.follow} primary fluid> Unfollow </Button> :
+                            this.props.user.userID === userData.data.user ? '' : <div>
+                                {userData.data.is_following ? <Button onClick={this.follow} primary fluid> Unfollow </Button> :
                                     <Button onClick={this.follow} primary fluid> Follow </Button>}
                             </div>
                         }
@@ -112,7 +97,7 @@ class UserProfile extends Component {
                 </Card>
                 {
                     <StackGrid columnWidth={200}>
-                        {data.posts && data.posts.map(post => {
+                        {userData.data.posts.map(post => {
                             return (
                                 <div key={`key${post.id + 1}`}>
                                     <Link to={`/post/${post.id}`}>
@@ -131,4 +116,19 @@ class UserProfile extends Component {
     }
 }
 
-export default UserProfile;
+const mapStateToProps = state => {
+    return {
+        userData: state.userProfile.userProfile,
+        user: state.user.userId
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        profile: (username) => dispatch(profileData(username)),
+        fetchUser: () => dispatch(fetchUser())
+    }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

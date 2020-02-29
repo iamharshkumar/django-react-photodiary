@@ -3,11 +3,13 @@ import {Link} from 'react-router-dom';
 import StackGrid from "react-stack-grid";
 import {connect} from 'react-redux';
 import {postsFetch} from "../store/actions/posts";
+import {fetchUser} from "../store/actions/userId";
 
 class Posts extends Component {
 
     componentDidMount() {
-        this.props.fetchPosts()
+        this.props.fetchPosts();
+        this.props.fetchUser();
     }
 
     render() {
@@ -44,7 +46,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchPosts: () => dispatch(postsFetch())
+        fetchPosts: () => dispatch(postsFetch()),
+        fetchUser: () => dispatch(fetchUser())
     }
 };
 

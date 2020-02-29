@@ -11,6 +11,7 @@ import postsReducer from "./store/reducers/posts";
 import userFeed from "./store/reducers/userFeed";
 import userProfileReducer from "./store/reducers/userProfile";
 import userIdReducer from "./store/reducers/userId";
+import postDetailReducer from "./store/reducers/postDetail";
 
 const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
     posts: postsReducer,
     userFeed: userFeed,
     userProfile: userProfileReducer,
-    user: userIdReducer
+    user: userIdReducer,
+    postDetail: postDetailReducer
 });
 
 const store = createStore(rootReducer, composeEnhances(applyMiddleware(thunk)));

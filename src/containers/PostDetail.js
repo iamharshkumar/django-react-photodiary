@@ -1,60 +1,31 @@
 import React, {Component} from 'react';
 import {Container, Image, Comment, Header, Form, Button} from "semantic-ui-react";
-import {createComment, likes, postDetailURL, postListURL, UserIdURL} from "../store/constants";
-import {authAxios} from "../utils";
 import {URL} from "../store/constants";
+import {fetchPostDetail, fetchPostLike, addComment} from "../store/actions/postDetail";
+import {connect} from 'react-redux';
 
 class PostDetail extends Component {
     state = {
-        post: {},
-        comments: null,
-        user: null,
         comment: '',
         action: ''
     };
 
     componentDidMount() {
-        this.postsRender();
-
-        authAxios.get(UserIdURL)
-            .then(res => {
-                console.log(res.data);
-                this.setState({user: res.data.userID})
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        const {id} = this.props.match.params;
+        this.props.fetchPostDetail(id);
     }
 
-    postsRender = () => {
-        const {id} = this.props.match.params;
-        console.log(id)
-        authAxios.get(postDetailURL(id))
-            .then(res => {
-                console.log(res.data);
-                this.setState({post: res.data})
-            })
-            .catch(err => {
-                console.log(err)
-            });
-    };
 
     commentSubmit = () => {
         const {id} = this.props.match.params;
-        authAxios.post(createComment, {
-            'author': this.state.user,
+
+        this.props.addComment({
+            'author': this.props.user.userID,
             'comment': this.state.comment,
             'post': id
-        })
-            .then(res => {
-                console.log(res.data);
-                this.setState({comments: res.data})
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        });
+        this.props.fetchPostDetail(id);
 
-        this.postsRender();
         this.setState({comment: ""})
     };
 
@@ -63,33 +34,30 @@ class PostDetail extends Component {
     };
 
     likes = () => {
-        const {post} = this.state;
+        const {post} = this.props;
 
-        if (post.is_like) {
+        if (post.is_like && post.is_like) {
             this.likesHandle("unlike")
         } else {
             this.likesHandle("like")
         }
-    }
+    };
 
     likesHandle = (value) => {
         const {id} = this.props.match.params;
 
         this.setState({action: value}, () => {
-            authAxios.post(likes, {"post_id": id, "action": this.state.action})
-                .then(res => {
-                    console.log(res.data)
-                    this.setState({post: res.data})
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+            this.props.fetchPostLike({"post_id": id, "action": this.state.action})
         })
-    }
+    };
 
     render() {
-        const {post} = this.state;
-        console.log(post.image)
+        const {post} = this.props;
+        if (!post) {
+            return <div>
+                Loading...
+            </div>
+        }
         return (
             <Container>
                 <Image src={post.image} size="huge" rounded centered/>
@@ -98,7 +66,7 @@ class PostDetail extends Component {
                 <hr/>
                 <p><b>{post.likes_count} likes</b></p>
                 {
-                    post.is_like ? <Button onClick={this.likes} primary>Unlike</Button> :
+                    post.is_like && post.is_like ? <Button onClick={this.likes} primary>Unlike</Button> :
                         <Button onClick={this.likes} primary>Like</Button>
                 }
 
@@ -133,4 +101,20 @@ class PostDetail extends Component {
     }
 }
 
-export default PostDetail;
+const mapStateToProps = (state) => {
+    return {
+        post: state.postDetail.postDetail,
+        user: state.user.userId
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchPostDetail: (post_id) => dispatch(fetchPostDetail(post_id)),
+        fetchPostLike: (data) => dispatch(fetchPostLike(data)),
+        addComment: (data) => dispatch(addComment(data))
+    }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostDetail);

@@ -13,6 +13,11 @@ class CustomLayout extends React.Component {
     componentDidMount() {
     }
 
+    logout = () => {
+        this.props.logout()
+        this.props.history.push('/login')
+    };
+
     render() {
         const {authenticated} = this.props;
         return (
@@ -44,7 +49,7 @@ class CustomLayout extends React.Component {
 
                         {authenticated ? (
                             <div>
-                                <Menu.Item header onClick={() => this.props.logout()}>
+                                <Menu.Item header onClick={this.logout}>
                                     Logout
                                 </Menu.Item>
                             </div>

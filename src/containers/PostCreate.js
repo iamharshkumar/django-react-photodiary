@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Form, Checkbox, Button} from "semantic-ui-react";
+import {Container, Form, Checkbox, Button, Message, Loader} from "semantic-ui-react";
 import axios from "axios";
 import {postCreateURL, postListURL, UserIdURL} from "../store/constants";
 import {connect} from "react-redux";
@@ -11,18 +11,13 @@ class PostCreate extends Component {
         "user": null,
         "post_name": "",
         "image": null,
-        "description": ""
+        "description": "",
+        status: null,
+        loader: false
     };
 
     componentDidMount() {
-        authAxios.get(UserIdURL)
-            .then(res => {
-                console.log(res.data)
-                this.setState({user: res.data.userID})
-            })
-            .catch(err => {
-                console.log(err)
-            })
+
     }
 
     postSubmit = () => {
@@ -31,12 +26,16 @@ class PostCreate extends Component {
         form_data.append('post_name', this.state.post_name);
         form_data.append('image', this.state.image, this.state.image.name);
         form_data.append('description', this.state.description);
+        this.setState({loader: true})
         axios.post(postCreateURL, form_data)
             .then(res => {
                 console.log(res.data)
+                this.setState({loader: false})
+                this.setState({status: true});
             })
             .catch(err => {
                 console.log(err)
+                this.setState({status: false})
             })
     };
 
@@ -52,16 +51,25 @@ class PostCreate extends Component {
 
     render() {
 
-        if(!this.props.authenticated){
-            return <Redirect to="/login" />;
+        if (!this.props.authenticated) {
+            return <Redirect to="/login"/>;
+        }
+
+        if (this.state.loader) {
+            return <Loader active inline='centered' />;
         }
 
         return (
             <Container>
+                {
+                    this.state.status ? <Message color='green'>Post create successful!</Message> :
+                        ''
+                }
+
                 <Form onSubmit={this.postSubmit}>
                     <Form.Field>
                         <label>Post*</label>
-                        <input placeholder='Post name' name="post_name" onChange={this.handleChange}/>
+                        <input placeholder='Post name' name="post_name" onChange={this.handleChange} required/>
                     </Form.Field>
                     <Form.Field>
                         <label>Description</label>
@@ -69,7 +77,7 @@ class PostCreate extends Component {
                     </Form.Field>
                     <Form.Field>
                         <label>Image*</label>
-                        <input type="file" name="image" onChange={this.handleImage}/>
+                        <input type="file" name="image" onChange={this.handleImage} required/>
                     </Form.Field>
 
                     <Button type='submit'>Submit</Button>

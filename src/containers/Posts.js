@@ -9,7 +9,9 @@ class Posts extends Component {
 
     componentDidMount() {
         this.props.fetchPosts();
-        this.props.fetchUser();
+        if (this.props.authenticated) {
+            this.props.fetchUser();
+        }
     }
 
     render() {
@@ -40,7 +42,8 @@ class Posts extends Component {
 const mapStateToProps = state => {
     return {
         token: state.auth.token,
-        posts: state.posts.posts
+        posts: state.posts.posts,
+        authenticated: state.auth.token !== null,
     }
 };
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Form, Checkbox, Button} from "semantic-ui-react";
+import {Container, Form, Checkbox, Button, Message, Loader} from "semantic-ui-react";
 import axios from "axios";
 import {postListURL, updateProfile, UserIdURL} from "../store/constants";
 import {connect} from "react-redux";
@@ -10,7 +10,9 @@ class ProfileForm extends Component {
     state = {
         "first_name": "",
         "profile_pic": null,
-        "last_name": ""
+        "last_name": "",
+        status: null,
+        loader: false
     };
 
     componentDidMount() {
@@ -29,13 +31,16 @@ class ProfileForm extends Component {
         if (this.state.profile_pic) {
             form_data.append('profile_pic', this.state.profile_pic, this.state.profile_pic.name);
         }
-
+        this.setState({loader: true});
         axios.patch(updateProfile(this.props.user.userID), form_data)
             .then(res => {
-                console.log(res.data)
+                console.log(res.data);
+                this.setState({loader: false});
+                this.setState({status: true})
             })
             .catch(err => {
                 console.log(err)
+                this.setState({status: false})
             })
     };
 
@@ -55,8 +60,16 @@ class ProfileForm extends Component {
             return <Redirect to="/login"/>;
         }
 
+        if (this.state.loader) {
+            return <Loader active inline='centered'/>;
+        }
+
         return (
             <Container>
+                {
+                    this.state.status ? <Message color='green'>Profile update successful!</Message> :
+                        ''
+                }
                 <Form onSubmit={this.postSubmit}>
                     <Form.Field>
                         <label>First name*</label>

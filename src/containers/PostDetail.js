@@ -66,8 +66,9 @@ class PostDetail extends Component {
                 <hr/>
                 <p><b>{post.likes_count} likes</b></p>
                 {
-                    post.is_like && post.is_like ? <Button onClick={this.likes} primary>Unlike</Button> :
-                        <Button onClick={this.likes} primary>Like</Button>
+                    this.props.authenticated && this.props.authenticated ?
+                        post.is_like && post.is_like ? <Button onClick={this.likes} primary>Unlike</Button> :
+                            <Button onClick={this.likes} primary>Like</Button> : ''
                 }
 
                 <Comment.Group>
@@ -77,7 +78,7 @@ class PostDetail extends Component {
 
                     {post.comments && post.comments.map(comment => {
                         return (
-                            <Comment>
+                            <Comment key={comment.id}>
                                 <Comment.Avatar src={`${URL}/media/${comment.profile_pic}`}/>
                                 <Comment.Content>
                                     <Comment.Author as='a'>{comment.user}</Comment.Author>
@@ -90,11 +91,13 @@ class PostDetail extends Component {
                         )
                     })}
 
+                    {
+                        this.props.authenticated && this.props.authenticated ? <Form onSubmit={this.commentSubmit}>
+                            <Form.TextArea onChange={this.commentChange} value={this.state.comment}/>
+                            <Button content='Add Comment' labelPosition='left' icon='edit' primary/>
+                        </Form> : ''
+                    }
 
-                    <Form onSubmit={this.commentSubmit}>
-                        <Form.TextArea onChange={this.commentChange} value={this.state.comment}/>
-                        <Button content='Add Comment' labelPosition='left' icon='edit' primary/>
-                    </Form>
                 </Comment.Group>
             </Container>
         )
@@ -104,7 +107,8 @@ class PostDetail extends Component {
 const mapStateToProps = (state) => {
     return {
         post: state.postDetail.postDetail,
-        user: state.user.userId
+        user: state.user.userId,
+        authenticated: state.auth.token !== null,
     }
 };
 

@@ -1,18 +1,16 @@
 import React, {Component} from 'react';
-import {authAxios} from "../utils";
-import {Container, Card, Image, Icon, Grid, Button, Segment} from "semantic-ui-react";
-import {profileView, userFollow, UserIdURL} from "../store/constants";
+import {Container, Card, Image, Icon, Button, Segment} from "semantic-ui-react";
 import {Link} from "react-router-dom";
 import StackGrid from "react-stack-grid";
 import {URL} from "../store/constants";
 import {connect} from 'react-redux';
 import {profileData} from "../store/actions/userProfile";
 import {fetchUser} from "../store/actions/userId";
+import {userFollowing} from "../store/actions/userProfile";
 
 
 class UserProfile extends Component {
     state = {
-        data: {},
         action: "",
     };
 
@@ -35,6 +33,8 @@ class UserProfile extends Component {
         const {username} = this.props.match.params;
 
         this.setState({action: value}, () => {
+            this.props.userFollowing(username, {"action": this.state.action});
+            this.props.profile(username);
         })
     };
 
@@ -126,7 +126,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         profile: (username) => dispatch(profileData(username)),
-        fetchUser: () => dispatch(fetchUser())
+        fetchUser: () => dispatch(fetchUser()),
+        userFollowing: (username, action) => dispatch(userFollowing(username, action))
     }
 };
 

@@ -1,11 +1,28 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
-import {profileView} from "../constants";
+import {profileView, userFollow} from "../constants";
+import {authAxios} from "../../utils";
 
 const userProfile = (userProfile) => {
     return {
         type: actionTypes.USER_PROFILE,
         userProfile: userProfile,
+    }
+};
+
+export const userFollowing = (username, action) => {
+    return dispatch => {
+        axios.defaults.headers = {
+            Authorization: `Token ${localStorage.getItem("token")}`
+        };
+        axios.post(userFollow(username), action)
+                .then(res => {
+                    console.log(res.data.data)
+                    dispatch(userProfile(res.data))
+                })
+                .then(err => {
+                    console.log(err)
+                })
     }
 };
 

@@ -8,26 +8,16 @@ import {authAxios} from "../utils";
 
 class ProfileForm extends Component {
     state = {
-        "user": null,
         "first_name": "",
         "profile_pic": null,
         "last_name": ""
     };
 
     componentDidMount() {
-        authAxios.get(UserIdURL)
-            .then(res => {
-                console.log(res.data)
-                this.setState({user: res.data.userID})
-            })
-            .catch(err => {
-                console.log(err)
-            })
     }
 
     postSubmit = () => {
         let form_data = new FormData();
-        // form_data.append('user', this.state.user);
         if (this.state.first_name) {
             form_data.append('first_name', this.state.first_name);
 
@@ -40,7 +30,7 @@ class ProfileForm extends Component {
             form_data.append('profile_pic', this.state.profile_pic, this.state.profile_pic.name);
         }
 
-        authAxios.patch(updateProfile(this.state.user), form_data)
+        axios.patch(updateProfile(this.props.user.userID), form_data)
             .then(res => {
                 console.log(res.data)
             })
@@ -90,7 +80,8 @@ class ProfileForm extends Component {
 
 const mapStateToProps = state => {
     return {
-        authenticated: state.auth.token !== null
+        authenticated: state.auth.token !== null,
+        user: state.user.userId
     }
 };
 

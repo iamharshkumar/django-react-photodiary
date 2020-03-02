@@ -2,8 +2,22 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
+from io import BytesIO
+from PIL import Image
+from django.core.files import File
+
 
 # Create your models here.
+
+def compress(image):
+    im = Image.open(image)
+    # create a BytesIO object
+    im_io = BytesIO()
+    # save image to BytesIO object
+    im.save(im_io, 'JPEG', quality=15)
+    # create a django-friendly Files object
+    new_image = File(im_io, name=image.name)
+    return new_image
 
 
 class UserProfile(models.Model):
@@ -15,6 +29,14 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def save(self, *args, **kwargs):
+        # call the compress function
+        new_image = compress(self.profile_pic)
+        # set self.image to new_image
+        self.image = new_image
+        # save
+        super().save(*args, **kwargs)
 
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
@@ -34,6 +56,14 @@ class Post(models.Model):
 
     def __str__(self):
         return self.post_name
+
+    def save(self, *args, **kwargs):
+        # call the compress function
+        new_image = compress(self.image)
+        # set self.image to new_image
+        self.image = new_image
+        # save
+        super().save(*args, **kwargs)
 
 
 class Comment(models.Model):

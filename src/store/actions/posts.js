@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes'
 import axios from "axios";
-import {postListURL, userFeed} from "../constants";
+import {postListURL} from "../constants";
 
 export const fetchPosts = posts => {
     return {
@@ -9,9 +9,15 @@ export const fetchPosts = posts => {
     }
 };
 
-export const postsFetch = () => {
+export const postFetchStart = () => {
+    return {
+        type: actionTypes.POSTS_FETCH
+    }
+};
 
+export const postsFetch = () => {
     return dispatch => {
+        dispatch(postFetchStart())
         axios.get(postListURL)
             .then(res => {
                 // console.log(res.data);

@@ -9,6 +9,12 @@ const postDetail = (post_data) => {
     }
 };
 
+const postStart = () => {
+    return {
+        type: actionTypes.POST_DETAIL_START
+    }
+};
+
 export const fetchPostLike = (data) => {
     return dispatch => {
         axios.defaults.headers = {
@@ -31,7 +37,8 @@ export const addComment = (data) => {
         };
         axios.post(createComment, data)
             .then(res => {
-                dispatch(postDetail(res.data))
+                console.log(res.data)
+                // dispatch(postDetail(res.data))
             })
             .catch(err => {
                 console.log(err)
@@ -41,6 +48,7 @@ export const addComment = (data) => {
 
 export const fetchPostDetail = (post_id) => {
     return dispatch => {
+        dispatch(postStart());
         axios.get(postDetailURL(post_id))
             .then(res => {
                 console.log(res.data);

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Image, Comment, Header, Form, Button} from "semantic-ui-react";
+import {Container, Image, Comment, Header, Form, Button, Loader} from "semantic-ui-react";
 import {URL} from "../store/constants";
 import {fetchPostDetail, fetchPostLike, addComment} from "../store/actions/postDetail";
 import {connect} from 'react-redux';
@@ -52,19 +52,17 @@ class PostDetail extends Component {
     };
 
     render() {
-        const {post} = this.props;
-        if (!post) {
-            return <div>
-                Loading...
-            </div>
+        const {post, loading} = this.props;
+        if (loading) {
+            return <Loader active inline='centered'/>
         }
         return (
             <Container>
-                <Image src={post.image} size="huge" rounded centered/>
-                <h3>{post.post_name}</h3>
-                <p>{post.description}</p>
+                <Image src={post.image && post.image} size="huge" rounded centered/>
+                <h3>{post.post_name && post.post_name}</h3>
+                <p>{post.description && post.description}</p>
                 <hr/>
-                <p><b>{post.likes_count} likes</b></p>
+                <p><b>{post.likes_count && post.likes_count} likes</b></p>
                 {
                     this.props.authenticated && this.props.authenticated ?
                         post.is_like && post.is_like ? <Button onClick={this.likes} primary>Unlike</Button> :
@@ -107,6 +105,7 @@ class PostDetail extends Component {
 const mapStateToProps = (state) => {
     return {
         post: state.postDetail.postDetail,
+        loading: state.postDetail.loading,
         user: state.user.userId,
         authenticated: state.auth.token !== null,
     }

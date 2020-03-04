@@ -42,9 +42,35 @@ class UserIDView(APIView):
         return Response({'userID': request.user.id, 'username': request.user.username}, status=HTTP_200_OK)
 
 
+def is_there_more_data(request):
+    offset = request.GET.get('offset')
+    if int(offset) > Post.objects.all().count():
+        return False
+    return True
+
+
+def infinite_filter(request):
+    limit = request.GET.get('limit')
+    offset = request.GET.get('offset')
+    return Post.objects.all()[int(offset): int(offset) + int(limit)]
+
+
 class PostViewSets(ListAPIView):
     serializer_class = PostSerializers
-    queryset = Post.objects.order_by('-created')
+
+    def get_queryset(self):
+        qs = infinite_filter(self.request)
+        return qs
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response({
+            "posts": serializer.data,
+            "has_more": is_there_more_data(self.request)
+        })
+
+    # queryset = Post.objects.order_by('-created')
 
 
 class PostDetailView(RetrieveAPIView):

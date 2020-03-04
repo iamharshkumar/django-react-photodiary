@@ -5,7 +5,7 @@ const apiURL ='/api';
 
 export const endpoint =`${URL}${apiURL}`;
 
-export const postListURL =`${endpoint}/posts/`;
+export const postListURL = (limit, offset) => `${endpoint}/posts/?limit=${limit}&offset=${offset}`;
 export const postCreateURL =`${endpoint}/create/`;
 export const postDetailURL = (id) => `${endpoint}/post/${id}/`;
 export const UserIdURL = `${endpoint}/user-id/`;

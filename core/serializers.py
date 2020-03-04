@@ -1,5 +1,17 @@
 from rest_framework import serializers
-from .models import Post, Comment, UserProfile
+from .models import Post, Comment, UserProfile, User
+
+
+class UserSerializer(serializers.ModelSerializer):
+    profile = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'profile')
+
+    def get_profile(self, obj):
+        qs = UserProfile.objects.get(user__username=obj.username)
+        return UserProfileSerializer(qs).data
 
 
 class UserProfileSerializer(serializers.ModelSerializer):

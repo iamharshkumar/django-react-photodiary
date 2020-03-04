@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Card, Image, Icon, Button, Segment} from "semantic-ui-react";
+import {Container, Card, Image, Icon, Button, Segment, Loader} from "semantic-ui-react";
 import {Link} from "react-router-dom";
 import StackGrid from "react-stack-grid";
 import {URL} from "../store/constants";
@@ -34,60 +34,63 @@ class UserProfile extends Component {
 
         this.setState({action: value}, () => {
             this.props.userFollowing(username, {"action": this.state.action});
-            this.props.profile(username);
+            // this.props.profile(username);
         })
     };
 
     render() {
-        const {userData} = this.props;
+        const {userData, loading} = this.props;
         const {username} = this.props.match.params;
 
-         if (!userData) {
-            return <div>
-                Loading...
-            </div>
+        if (loading) {
+            return <Loader active inline='centered'/>
         }
 
         return (
             <Container>
                 <Card centered>
                     {
-                        userData.data.profile_pic ?
-                            <Image src={`${userData.data && userData.data.profile_pic}`} wrapped ui={false} size='medium' circular centered/> :
+                        userData && userData.data.profile_pic ?
+                            <Image src={`${userData.data && userData.data.profile_pic}`} wrapped ui={false}
+                                   size='medium' circular centered/> :
                             <Segment><Image src='https://react.semantic-ui.com/images/wireframe/square-image.png'
                                             size='medium'
                                             circular/></Segment>
                     }
                     <Card.Content>
-                        <Card.Header>{userData.data.first_name + " " + userData.data.last_name}
+                        <Card.Header>{userData && (userData.data.first_name + " " + userData.data.last_name)}
                             {
-                                this.props.user.userID === userData.data.user ? <Link to={`/profiles/${username}/edit`}>
+                                this.props.user.userID === (userData && userData.data.user) ?
+                                    <Link to={`/profiles/${username}/edit`}>
                                 <span>
                                     <Icon name='edit'/> Edit
                                 </span>
-                                </Link> : ""
+                                    </Link> : ""
                             }
 
                         </Card.Header>
                         <Card.Meta>
-                            <span className='date'>{userData.data.username}</span>
+                            <span className='date'>{userData && userData.data.username}</span>
                         </Card.Meta>
                         <Card.Description>
                             Matthew is a musician living in Nashville.
                         </Card.Description>
                     </Card.Content>
                     <Card.Content extra>
-                        <a>
+                        <Link to={`/${userData && userData.data.username}/followers/`}>
                             <Icon name='user'/>
-                            {userData.data.followers_count} Followers
+                            {userData && userData.data.followers_count} Followers
+                        </Link>
+                        <Link to={`/${userData && userData.data.username}/following/`} style={{float: 'right'}}>
                             <Icon name='user'/>
-                            {userData.data.following_count} Following
-                        </a>
+                            {userData && userData.data.following_count} Following
+                        </Link>
                     </Card.Content>
                     <Card.Content extra>
                         {
-                            this.props.user.userID === userData.data.user ? '' : <div>
-                                {userData.data.is_following ? <Button onClick={this.follow} primary fluid> Unfollow </Button> :
+                            this.props.user.userID === (userData && userData.data.user) ? '' : <div>
+                                {userData && userData.data.is_following ?
+                                    <Button onClick={this.follow} primary fluid> Unfollow </Button> :
                                     <Button onClick={this.follow} primary fluid> Follow </Button>}
                             </div>
                         }
@@ -97,11 +100,11 @@ class UserProfile extends Component {
                 </Card>
                 {
                     <StackGrid columnWidth={200}>
-                        {userData.data.posts.map(post => {
+                        {userData && userData.data.posts.map(post => {
                             return (
                                 <div key={`key${post.id + 1}`}>
                                     <Link to={`/post/${post.id}`}>
-                                        <img style={{width: "200px", borderRadius:"10px"}}
+                                        <img style={{width: "200px", borderRadius: "10px"}}
                                              src={`${URL}${post.image}`} alt=""/>
                                     </Link>
                                 </div>
@@ -119,6 +122,7 @@ class UserProfile extends Component {
 const mapStateToProps = state => {
     return {
         userData: state.userProfile.userProfile,
+        loading: state.userProfile.loading,
         user: state.user.userId
     }
 };

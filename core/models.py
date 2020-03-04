@@ -24,6 +24,7 @@ class UserProfile(models.Model):
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     profile_pic = models.ImageField(upload_to='profile_pix', null=True, blank=True)
+    # bio = models.CharField(max_length=500, null=True, blank=True)
     followers = models.ManyToManyField(User, related_name='following', blank=True)
 
     def __str__(self):

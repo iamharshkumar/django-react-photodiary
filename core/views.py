@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.status import HTTP_200_OK
 from rest_framework.response import Response
-from .serializers import PostSerializers, CommentSerializers, UserProfileSerializer
-from .models import Post, Comment, UserProfile
+from .serializers import PostSerializers, CommentSerializers, UserProfileSerializer, UserSerializer
+from .models import Post, Comment, UserProfile, User
 
 
 # Create your views here.
@@ -94,4 +94,24 @@ class LikesView(APIView):
                 post_obj.likes.remove(user)
 
         serializer = PostSerializers(instance=post_obj, context={"request": request})
+        return Response(serializer.data, status=HTTP_200_OK)
+
+
+class FollowersListView(APIView):
+    serializer_class = UserSerializer
+
+    def get(self, request, username):
+        user = UserProfile.objects.get(user__username=username)
+        qs = user.followers.all()
+        serializer = self.serializer_class(qs, many=True).data
+        return Response(serializer, status=HTTP_200_OK)
+
+
+class FollowingListView(APIView):
+    serializer_class = UserProfileSerializer
+
+    def get(self, request, username):
+        user = User.objects.get(username=username)
+        qs = user.following.all()
+        serializer = self.serializer_class(instance=qs, many=True)
         return Response(serializer.data, status=HTTP_200_OK)

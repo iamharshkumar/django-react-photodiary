@@ -10,3 +10,4 @@ export const POST_DETAIL = "POST_DETAIL";
 export const POST_LIKE = "POST_LIKE";
 export const POST_DETAIL_START = "POST_DETAIL_START";
 export const POSTS_FETCH = "POST_DETAIL_START";
+export const FETCH_PROFILE_START = "FETCH_PROFILE_START";

@@ -11,6 +11,8 @@ export const postDetailURL = (id) => `${endpoint}/post/${id}/`;
 export const UserIdURL = `${endpoint}/user-id/`;
 export const createComment = `${endpoint}/comment/`;
 export const profileView = (username) => `${endpoint}/profile/${username}`;
+export const followers = (username) => `${endpoint}/${username}/followers/`;
+export const following = (username) => `${endpoint}/${username}/following/`;
 export const userFollow = (username) => `${endpoint}/profile/${username}/follow/`;
 export const likes = `${endpoint}/likes/`;
 export const updateProfile = (id) => `${endpoint}/profile/${id}/edit/`;

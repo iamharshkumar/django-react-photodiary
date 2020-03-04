@@ -10,24 +10,32 @@ const userProfile = (userProfile) => {
     }
 };
 
+const fetchProfileStart = () => {
+    return {
+        type: actionTypes.FETCH_PROFILE_START
+    }
+};
+
 export const userFollowing = (username, action) => {
     return dispatch => {
         axios.defaults.headers = {
             Authorization: `Token ${localStorage.getItem("token")}`
         };
         axios.post(userFollow(username), action)
-                .then(res => {
-                    console.log(res.data.data)
-                    dispatch(userProfile(res.data))
-                })
-                .then(err => {
-                    console.log(err)
-                })
+            .then(res => {
+                console.log(res.data.data);
+                dispatch(userProfile(res.data))
+            })
+            .then(err => {
+                console.log(err)
+            })
     }
 };
 
 export const profileData = (username) => {
     return dispatch => {
+        dispatch(fetchProfileStart());
+
         axios.defaults.headers = {
             Authorization: `Token ${localStorage.getItem("token")}`
         };

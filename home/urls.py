@@ -4,7 +4,7 @@ from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from django.conf.urls.static import static
 from core.views import UserIDView, CommentView, UserProfileView, LikesView, UserProfileEditView, FollowingUserPosts, \
-    PostViewSets, PostDetailView, PostCreateView
+    PostViewSets, PostDetailView, PostCreateView, FollowersListView, FollowingListView
 
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
@@ -21,7 +21,8 @@ urlpatterns = [
     path('api/userfeed/', FollowingUserPosts.as_view(), name='profile-edit'),
     path('api/posts/', PostViewSets.as_view(), name='list-posts'),
     path('api/create/', PostCreateView.as_view(), name='post-create'),
-
+    path('api/<username>/followers/', FollowersListView.as_view(), name='user-followers'),
+    path('api/<username>/following/', FollowingListView.as_view(), name='user-following'),
 
 ]
 

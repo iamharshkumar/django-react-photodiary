@@ -2,6 +2,7 @@ import React from "react";
 import {
     Container,
     Menu,
+    Dropdown
 } from "semantic-ui-react";
 import {Link, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
@@ -20,6 +21,11 @@ class CustomLayout extends React.Component {
 
     render() {
         const {authenticated} = this.props;
+        const options = [
+            {key: 1, text: 'Choice 1', value: 1},
+            {key: 2, text: 'Choice 2', value: 2},
+            {key: 3, text: 'Choice 3', value: 3},
+        ]
         return (
             <div>
                 <Menu inverted>
@@ -33,38 +39,40 @@ class CustomLayout extends React.Component {
                             </Link>
                         ) : ''
                         }
-                        {authenticated && this.props.user && this.props.user.username ? (
-                            <Link to={`/profile/${this.props.user && this.props.user.username}`}>
-                                <Menu.Item header>{this.props.user && this.props.user.username}</Menu.Item>
-                            </Link>
-                        ) : ''
-                        }
-
                         {authenticated ? (
                             <Link to={`/userfeed/`}>
-                                <Menu.Item header>UserFeed</Menu.Item>
+                                <Menu.Item header>Userfeed</Menu.Item>
                             </Link>
                         ) : ''
                         }
 
-                        {authenticated ? (
-                            <div>
-                                <Menu.Item header onClick={this.logout}>
-                                    Logout
-                                </Menu.Item>
-                            </div>
-
-                        ) : (
-                            <React.Fragment>
-                                <Link to="/login">
-                                    <Menu.Item header>Login</Menu.Item>
+                        <Menu.Menu position='right'>
+                            {authenticated && this.props.user && this.props.user.username ? (
+                                <Link to={`/profile/${this.props.user && this.props.user.username}`}>
+                                    <Menu.Item header>{this.props.user && this.props.user.username}</Menu.Item>
                                 </Link>
-                                <Link to="/signup">
-                                    <Menu.Item header>Signup</Menu.Item>
-                                </Link>
+                            ) : ''
+                            }
+                            {authenticated ? (
+                                <div>
+                                    <Menu.Item header onClick={this.logout}>
+                                        Logout
+                                    </Menu.Item>
+                                </div>
 
-                            </React.Fragment>
-                        )}
+                            ) : (
+                                <React.Fragment>
+                                    <Link to="/login">
+                                        <Menu.Item header>Login</Menu.Item>
+                                    </Link>
+                                    <Link to="/signup">
+                                        <Menu.Item header>Signup</Menu.Item>
+                                    </Link>
+
+                                </React.Fragment>
+                            )}
+
+                        </Menu.Menu>
                     </Container>
                 </Menu>
 

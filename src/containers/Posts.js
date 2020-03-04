@@ -28,15 +28,15 @@ class Posts extends Component {
         }
 
         return (
-            <StackGrid columnWidth={width <= 500 ? 200 : 250} gutterWidth={10} monitorImagesLoaded="false">
+            <StackGrid columnWidth={width <= 500 ? 200 : 300} gutterWidth={10} monitorImagesLoaded="false">
                 {posts.map(post => {
                     return (
                         <div key={`key${post.id + 1}`}>
                             <Link to={`/post/${post.id}`}>
                                 <img
-                                    style={width <= 500 ? {width: '200px', borderRadius: "10px"} : {
-                                        width: '250px',
-                                        borderRadius: "10px"
+                                    style={width <= 500 ? {width: '200px'} : {
+                                        width: '300px',
+
                                     }}
                                     src={post.image} alt=""
                                     onLoad={() => this.setState({loaded: true})}/>

@@ -3,6 +3,7 @@ import {Container, Image, Comment, Header, Form, Button, Loader} from "semantic-
 import {URL} from "../store/constants";
 import {fetchPostDetail, fetchPostLike, addComment} from "../store/actions/postDetail";
 import {connect} from 'react-redux';
+import {Link} from "react-router-dom";
 
 class PostDetail extends Component {
     state = {
@@ -60,6 +61,13 @@ class PostDetail extends Component {
             <Container>
                 <Image src={post.image && post.image} size="huge" rounded centered/>
                 <h3>{post.post_name && post.post_name}</h3>
+                <i>
+
+                    Author: <Link to={`/profile/${post.author}`}>
+                    {post.author}
+                </Link>
+                </i>
+                <br/>
                 <p>{post.description && post.description}</p>
                 <hr/>
                 <p><b>{post.likes_count && post.likes_count} likes</b></p>
@@ -79,7 +87,11 @@ class PostDetail extends Component {
                             <Comment key={comment.id}>
                                 <Comment.Avatar src={`${URL}/media/${comment.profile_pic}`}/>
                                 <Comment.Content>
-                                    <Comment.Author as='a'>{comment.user}</Comment.Author>
+                                    <Comment.Author as='a'>
+                                        <Link to={`/profile/${comment.user}`}>
+                                            {comment.user}
+                                        </Link>
+                                    </Comment.Author>
                                     <Comment.Metadata>
                                         <div>Today at 5:42PM</div>
                                     </Comment.Metadata>

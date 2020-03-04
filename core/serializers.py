@@ -90,7 +90,8 @@ class PostSerializers(serializers.ModelSerializer):
         return obj.user.user.username
 
     def get_comments(self, obj):
-        c_qs = Comment.objects.filter(post_id=obj.id)
+        q = Comment.objects.order_by('-created')
+        c_qs = q.filter(post_id=obj.id)
         comments = CommentSerializers(c_qs, many=True).data
         return comments
 

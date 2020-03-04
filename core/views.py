@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.status import HTTP_200_OK
 from rest_framework.response import Response
 from .serializers import PostSerializers, CommentSerializers, UserProfileSerializer, UserSerializer
@@ -52,7 +52,7 @@ def is_there_more_data(request):
 def infinite_filter(request):
     limit = request.GET.get('limit')
     offset = request.GET.get('offset')
-    return Post.objects.all()[int(offset): int(offset) + int(limit)]
+    return Post.objects.order_by('-created')[int(offset): int(offset) + int(limit)]
 
 
 class PostViewSets(ListAPIView):
@@ -73,13 +73,14 @@ class PostViewSets(ListAPIView):
     # queryset = Post.objects.order_by('-created')
 
 
-class PostDetailView(RetrieveAPIView):
+class PostDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializers
     queryset = Post.objects.all()
 
 
 class PostCreateView(CreateAPIView):
     serializer_class = PostSerializers
+    permission_classes = (IsAuthenticated,)
     queryset = Post.objects.all()
 
 

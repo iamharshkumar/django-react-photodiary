@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {Container, Image, Comment, Header, Form, Button, Loader} from "semantic-ui-react";
-import {URL} from "../store/constants";
+import {postDetailURL, URL} from "../store/constants";
 import {fetchPostDetail, fetchPostLike, addComment} from "../store/actions/postDetail";
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
+import axios from 'axios';
 
 class PostDetail extends Component {
     state = {
@@ -52,35 +53,83 @@ class PostDetail extends Component {
         })
     };
 
+    postDelete = () => {
+        const {id} = this.props.match.params;
+        axios.delete(postDetailURL(id))
+            .then(res => {
+                console.log(res.data)
+                this.props.history.push('/')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    };
+
     render() {
-        const {post, loading} = this.props;
+        const {post, loading, user} = this.props;
         if (loading) {
             return <Loader active inline='centered'/>
         }
         return (
-            <Container>
+            <Container style={{width: '806px'}}>
                 <Image src={post.image && post.image} size="huge" rounded centered/>
                 <h3>{post.post_name && post.post_name}</h3>
-                <i>
 
-                    Author: <Link to={`/profile/${post.author}`}>
+
+                <h4><i>
+                    <b>Author</b>: <Link to={`/profile/${post.author}`}>
                     {post.author}
                 </Link>
-                </i>
+                </i></h4>
+
                 <br/>
+                {
+                    user.userID === post.user ?
+                        <div>
+                            <Button style={{float: 'right'}} basic color='red' onClick={this.postDelete}>
+                                Delete
+                            </Button>
+                            <Link to={`/edit/${post.id}`}>
+                                <Button style={{float: 'right'}} basic color='violet'>
+                                    Edit
+                                </Button>
+                            </Link></div>
+                        : ''
+                }
+                <b>Description</b>
                 <p>{post.description && post.description}</p>
                 <hr/>
-                <p><b>{post.likes_count && post.likes_count} likes</b></p>
                 {
                     this.props.authenticated && this.props.authenticated ?
-                        post.is_like && post.is_like ? <Button onClick={this.likes} primary>Unlike</Button> :
-                            <Button onClick={this.likes} primary>Like</Button> : ''
+                        post.is_like && post.is_like ?
+                            <div className="ui labeled button">
+                                <button className="ui red button" tabIndex="0" onClick={this.likes}>
+                                    <i aria-hidden="true" className="heart icon"/>
+                                    Unlike
+                                </button>
+                                <div className="ui red left pointing basic label">{post.likes_count}</div>
+                            </div>
+                            :
+                            <div className="ui labeled button">
+                                <button className="ui red button" tabIndex="0" onClick={this.likes}>
+                                    <i aria-hidden="true" className="heart icon"/>
+                                    Like
+                                </button>
+                                <div className="ui red left pointing basic label">{post.likes_count}</div>
+                            </div>
+                        : ''
                 }
 
                 <Comment.Group>
-                    <Header as='h3' dividing>
-                        Comments
+                    <Header as='h3'>
+                        Comments({post.comments && post.comments.length})
                     </Header>
+                    {
+                        this.props.authenticated && this.props.authenticated ? <Form onSubmit={this.commentSubmit}>
+                            <Form.TextArea onChange={this.commentChange} value={this.state.comment}/>
+                            <Button content='Add comment' secondary/>
+                        </Form> : ''
+                    }
 
                     {post.comments && post.comments.map(comment => {
                         return (
@@ -100,13 +149,6 @@ class PostDetail extends Component {
                             </Comment>
                         )
                     })}
-
-                    {
-                        this.props.authenticated && this.props.authenticated ? <Form onSubmit={this.commentSubmit}>
-                            <Form.TextArea onChange={this.commentChange} value={this.state.comment}/>
-                            <Button content='Add Comment' labelPosition='left' icon='edit' primary/>
-                        </Form> : ''
-                    }
 
                 </Comment.Group>
             </Container>

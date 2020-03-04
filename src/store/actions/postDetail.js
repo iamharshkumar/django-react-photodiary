@@ -15,6 +15,7 @@ const postStart = () => {
     }
 };
 
+
 export const fetchPostLike = (data) => {
     return dispatch => {
         axios.defaults.headers = {
@@ -37,11 +38,10 @@ export const addComment = (data) => {
         };
         axios.post(createComment, data)
             .then(res => {
-                console.log(res.data)
-                // dispatch(postDetail(res.data))
+                console.log(res.data);
             })
             .catch(err => {
-                console.log(err)
+                console.log(err, 'error')
             })
     }
 };

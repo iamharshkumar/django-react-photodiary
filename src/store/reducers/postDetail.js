@@ -3,13 +3,13 @@ import {updateObject} from "../utility";
 
 const initialState = {
     postDetail: {},
-    loading: false
+    loading: false,
 };
 
 const post = (state, action) => {
     return updateObject(state, {
         postDetail: action.postDetail,
-        loading: false
+        loading: false,
     })
 };
 
@@ -19,7 +19,7 @@ const postStart = (state) => {
     })
 };
 
-const postDetailReducer = (state=initialState, action) => {
+const postDetailReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.POST_DETAIL:
             return post(state, action);

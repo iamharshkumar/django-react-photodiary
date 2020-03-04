@@ -12,6 +12,7 @@ import ProfileForm from "./containers/ProfileForm";
 import UserFeed from "./containers/UserFeed";
 import Followers from "./containers/Followers";
 import Following from "./containers/Following";
+import PostEdit from "./containers/PostEdit";
 
 const BaseRouter = () => (
     <Hoc>
@@ -19,6 +20,7 @@ const BaseRouter = () => (
         <Route path="/signup" component={Signup}/>
         <Route exact path="/" component={Posts}/>
         <Route exact path="/create" component={PostCreate}/>
+        <Route path="/edit/:id" component={PostEdit}/>
         <Route path="/post/:id" component={PostDetail}/>
         <Route path="/profile/:username" component={UserProfile}/>
         <Route path="/profiles/:username/edit" component={ProfileForm}/>

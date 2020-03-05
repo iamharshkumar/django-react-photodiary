@@ -71,7 +71,7 @@ class PostDetail extends Component {
             return <Loader active inline='centered'/>
         }
         return (
-            <Container style={{width: '806px'}}>
+            <Container style={{width: '806px',marginBottom: '50px'}}>
                 <Image src={post.image && post.image} size="huge" rounded centered/>
                 <h3>{post.post_name && post.post_name}</h3>
 

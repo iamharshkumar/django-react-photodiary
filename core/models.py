@@ -30,14 +30,6 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-    def save(self, *args, **kwargs):
-        # call the compress function
-        new_image = compress(self.profile_pic)
-        # set self.image to new_image
-        self.image = new_image
-        # save
-        super().save(*args, **kwargs)
-
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserProfile.objects.create(user=instance)

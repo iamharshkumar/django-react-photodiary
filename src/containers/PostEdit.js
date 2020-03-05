@@ -67,27 +67,34 @@ class PostEdit extends Component {
         }
 
         return (
-            <Container>
-                {
-                    this.state.status ? <Message color='green'>Post update successful!</Message> :
-                        ''
-                }
+            <div >
+                <Container>
 
-                <Form onSubmit={this.postSubmit}>
-                    <Form.Field>
-                        <label>Post*</label>
-                        <input placeholder='Post name' value={this.state.post_name} name="post_name"
-                               onChange={this.handleChange} required/>
-                    </Form.Field>
-                    <Form.Field>
-                        <label>Description</label>
-                        <input placeholder='Post description' value={this.state.description} name="description"
-                               onChange={this.handleChange}/>
-                    </Form.Field>
 
-                    <Button type='submit'>Update</Button>
-                </Form>
-            </Container>
+                    {
+                        this.state.status ? <Message color='green'>Post update successful!</Message> :
+                            ''
+                    }
+
+                    <Form onSubmit={this.postSubmit}>
+                        <Form.Field>
+                            <label>Post*</label>
+                            <input placeholder='Post name' value={this.state.post_name} name="post_name"
+                                   onChange={this.handleChange} required/>
+                        </Form.Field>
+                        <Form.Field>
+                            <label>Description</label>
+                            <input placeholder='Post description' value={this.state.description} name="description"
+                                   onChange={this.handleChange}/>
+                        </Form.Field>
+
+                        <Button type='submit'>Update</Button>
+                    </Form>
+
+                </Container>
+                <br/>
+            </div>
+
         )
     }
 }

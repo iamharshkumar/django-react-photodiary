@@ -12,6 +12,7 @@ import {userFollowing} from "../store/actions/userProfile";
 class UserProfile extends Component {
     state = {
         action: "",
+        loaded: false
     };
 
     componentDidMount() {
@@ -105,7 +106,9 @@ class UserProfile extends Component {
                                 <div key={`key${post.id + 1}`}>
                                     <Link to={`/post/${post.id}`}>
                                         <img style={{width: "200px", borderRadius: "10px"}}
-                                             src={`${URL}${post.image}`} alt=""/>
+                                             src={`${URL}${post.image}`} alt=""
+                                             
+                                        />
                                     </Link>
                                 </div>
                             )

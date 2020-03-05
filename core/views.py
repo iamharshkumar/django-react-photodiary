@@ -1,4 +1,3 @@
-from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
@@ -70,7 +69,6 @@ class PostViewSets(ListAPIView):
             "has_more": is_there_more_data(self.request)
         })
 
-    # queryset = Post.objects.order_by('-created')
 
 
 class PostDetailView(RetrieveUpdateDestroyAPIView):

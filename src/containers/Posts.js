@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import StackGrid from "react-stack-grid";
 import {connect} from 'react-redux';
-import {fetchPosts, postsFetch} from "../store/actions/posts";
 import {fetchUser} from "../store/actions/userId";
 import {Loader} from "semantic-ui-react";
 import sizeMe from 'react-sizeme';
@@ -29,7 +28,12 @@ class Posts extends Component {
             } = this;
 
             if (loading || error || !hasMore) return;
-            if (document.documentElement.scrollHeight - document.documentElement.scrollTop === document.documentElement.clientHeight) {
+
+            // if (parseInt(document.documentElement.scrollHeight - document.documentElement.scrollTop) <= parseInt(document.documentElement.clientHeight)) {
+            //     this.loadPosts()
+            // }
+
+            if (parseInt(document.documentElement.scrollHeight - document.documentElement.scrollTop - 200) <= parseInt(document.documentElement.clientHeight)) {
                 this.loadPosts()
             }
         }
@@ -74,14 +78,8 @@ class Posts extends Component {
         const {posts, loading, hasMore, error} = this.state;
         const {size: {width}} = this.props;
 
-        // if (loading) {
-        //     return <Loader active inline='centered'/>
-        // }
-
         return (
-            <div>
-
-
+            <div style={{marginBottom: '100px'}}>
                 <StackGrid columnWidth={width <= 500 ? 200 : 300} gutterWidth={10} monitorImagesLoaded="false">
                     {posts.map(post => {
                         return (
@@ -98,8 +96,6 @@ class Posts extends Component {
                             </div>
                         )
                     })}
-
-
                 </StackGrid>
                 {error && <div>{error}</div>}
                 {loading && <Loader active inline='centered'/>}
@@ -120,7 +116,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchPosts: () => dispatch(postsFetch()),
         fetchUser: () => dispatch(fetchUser()),
     }
 };

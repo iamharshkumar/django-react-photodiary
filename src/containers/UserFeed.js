@@ -6,7 +6,10 @@ import {connect} from "react-redux";
 import {userfeedFetch} from "../store/actions/userFeed";
 
 class UserFeed extends Component {
+    state = {
+        loaded: false
 
+    };
 
     componentDidMount() {
         this.props.userFeed();
@@ -21,12 +24,15 @@ class UserFeed extends Component {
         }
 
         return (
-            <StackGrid columnWidth={250} gutterWidth={10}>
+            <StackGrid columnWidth={200} gutterWidth={10}>
                 {posts.map(post => {
                     return (
                         <div key={`key${post.id + 1}`}>
                             <Link to={`/post/${post.id}`}>
-                                <img style={{width: "250px", borderRadius: "10px"}} src={`${URL}${post.image}`} alt=""/>
+                                <img style={{width: "200px", borderRadius: "10px"}} src={`${URL}${post.image}`}
+                                     alt=""
+                                     onLoad={() => this.setState({loaded: true})}
+                                />
                             </Link>
                         </div>
                     )
